@@ -1,0 +1,47 @@
+.font-small {
+  font-size: 0.8em;
+}
+.w-15 {
+  width: 15%;
+}
+.border-success:hover {
+  background-color: lightgreen;
+}
+.border-secondary:hover {
+  background-color: lightgray;
+}
+
+.mb-10 {
+  margin-bottom: 60px;
+}
+// .bg-lightgrey {
+//   background-color: lightgrey;
+// }
+textarea {
+  border: none;
+}
+textarea {
+  border: none;
+}
+.comment-card {
+  border: none;
+}
+.border-lightdary {
+  border: 1px solid rgb(192, 192, 192);
+}
+.bg-lightdary {
+  background-color: rgb(237, 237, 237);
+}
+.border-dangerer,
+.text-dangerer {
+  color: #b22222;
+}
+.border-danger:hover {
+  background-color: lightcoral;
+}
+.isFavorited {
+  background-color: #5cb85c;
+}
+.isNotFavorited {
+  background-color: white;
+}

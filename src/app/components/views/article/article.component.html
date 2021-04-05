@@ -1,0 +1,303 @@
+<div>
+  <div class="row w-100 mb-3">
+    <!-- ------------------------------------HEADER------------------------------------------------------->
+    <div class="col-12 text-light bg-dark d-flex flex-column p-3">
+      <h1 class="display-4 col-8 mx-auto">
+        <strong>{{ getTitle }}</strong>
+      </h1>
+      <div class="col-8 mx-auto d-flex align-items-center">
+        <span>
+          <img
+            src="{{ getImage }}"
+            style="height: 36px; width: 36px"
+            class="rounded-circle"
+          />
+        </span>
+        <div class="d-flex w-15 flex-wrap font-small">
+          <span class="col-md-12 pl-1">
+            {{ getAuthor }}
+          </span>
+          <span class="col-md-12 pl-1">
+            {{ getCreatedTime | date: "MMMM d, y" }}
+          </span>
+        </div>
+        <div>
+          <button
+            class="btn text-secondary border border-secondary py-1 px-2 mr-1"
+          >
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-plus-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                />
+                <path
+                  d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+                />
+              </svg>
+            </span>
+            <span (click)="followAuthor()" *ngIf="!isFollowed">
+              Follow {{ getAuthor }}
+            </span>
+            <span (click)="unFollowAuthor()" *ngIf="isFollowed">
+              Unfollow {{ getAuthor }}
+            </span>
+          </button>
+          <button
+            *ngIf="getAuthor !== currentUser.username"
+            class="btn text-success border border-success py-1 px-2 isFavorited"
+            [class.isFavorited]="isFavorited"
+            [class.isNotFavorited]="!isFavorited"
+          >
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-heart-fill text-light"
+                [class.text-success]="isNotFavorited"
+                [class.text-light]="isFavorited"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                />
+              </svg>
+            </span>
+            <span (click)="addFavoriteArticle()" *ngIf="!isFavorited">
+              Favorite Article
+            </span>
+            <span
+              (click)="removeFavorite()"
+              *ngIf="isFavorited"
+              [class.text-light]="isFavorited"
+            >
+              Unfavorite
+            </span>
+            <span *ngIf="getAuthor == currentUser.username">
+              Edit Article
+            </span>
+          </button>
+
+          <button
+            *ngIf="getAuthor == currentUser.username"
+            class="btn text-dangerer border border-danger py-1 px-2"
+            (click)="deleteArticle()"
+          >
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                />
+              </svg>
+            </span>
+            <span> Delete Article </span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ------------------------------------ARTICLE BODY------------------------------------------------------->
+
+    <div class="mx-auto col-12">
+      <div class="col-8 mx-auto">
+        <p class="mt-5 mb-10">
+          {{ getBody }}
+        </p>
+        <hr />
+      </div>
+    </div>
+    <hr />
+
+    <!-- ------------------------------------ARTICLE BODY------------------------------------------------------->
+    <div class="col-8 mx-auto d-flex align-items-center justify-content-center">
+      <div class="d-flex w-15 flex-wrap font-small">
+        <span class="col-md-12 pl-1 text-success">
+          <a>{{ getAuthor }}</a>
+        </span>
+        <span class="col-md-12 pl-1 text-secondary">
+          <a> {{ getCreatedTime | date: "MMMM d, y" }} </a>
+        </span>
+      </div>
+      <div>
+        <button
+          class="btn text-secondary border border-secondary py-1 px-2 mr-1"
+        >
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-plus-circle"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+              />
+              <path
+                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+              />
+            </svg>
+          </span>
+          <span> Follow {{ getAuthor }} </span>
+        </button>
+        <button
+          *ngIf="getAuthor !== currentUser.username"
+          class="btn text-success border border-success py-1 px-2"
+          [class.isFavorited]="isFavorited"
+          [class.isNotFavorited]="!isFavorited"
+        >
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-heart-fill text-light"
+              [class.text-success]="isNotFavorited"
+              [class.text-light]="isFavorited"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+              />
+            </svg>
+          </span>
+          <span (click)="addFavoriteArticle()" *ngIf="!isFavorited">
+            Favorite Article
+          </span>
+          <span
+            (click)="removeFavorite()"
+            *ngIf="isFavorited"
+            [class.text-light]="isFavorited"
+          >
+            Unfavorite
+          </span>
+          <span *ngIf="getAuthor == currentUser.username"> Edit Article </span>
+        </button>
+
+        <button
+          *ngIf="getAuthor == currentUser.username"
+          class="btn text-dangerer border border-danger py-1 px-2"
+          (click)="deleteArticle()"
+        >
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-trash"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+              />
+            </svg>
+          </span>
+          <span> Delete Article </span>
+        </button>
+      </div>
+    </div>
+    <!-- -----------------------------------------ADD COMMENT SECTION----------------------------------------------------->
+    <div class="col-8 mx-auto d-flex align-items-center justify-content-center">
+      <div class="comment-card mt-3 p-3 col-10">
+        <div class="w-100 border-lightdary">
+          <textarea
+            placeholder="Describe yourself here..."
+            class="w-100 h-100 pl-2 py-3 mb-0"
+            [(ngModel)]="newComment"
+          >
+          </textarea>
+        </div>
+        <div
+          class="w-100 bg-lightdary mt-0 p-3 px-4 d-flex justify-content-between"
+        >
+          <div>
+            <img
+              src="{{ getImage }}"
+              style="height: 18px; width: 18px"
+              class="rounded-circle"
+            />
+            <small class="text-danger" *ngIf="errorMessage.length > 1">
+              {{ errorMessage }}
+            </small>
+          </div>
+          <div>
+            <button (click)="addComment()" class="btn btn-success p-2">
+              Post Comment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ----------------------------------------------COMMENT SECTION------------------------------------------------ -->
+    <div
+      *ngIf="authService.isAuthenticated"
+      class="col-8 mx-auto d-flex align-items-center justify-content-center flex-wrap"
+    >
+      <div
+        *ngFor="let comment of slugComment"
+        class="comment-card mt-3 py-3 col-10"
+      >
+        <div class="w-100 border-lightdary">
+          <textarea class="w-100 h-100 pl-2 py-3 mb-0">{{
+            comment.body
+          }}</textarea>
+        </div>
+        <div
+          class="w-100 bg-lightdary mt-0 p-3 px-4 d-flex align-items-baseline justify-content-between"
+        >
+          <div class="card-comment">
+            <img
+              src="{{ getImage }}"
+              style="height: 18px; width: 18px"
+              class="rounded-circle"
+            />
+            <span class="text-success">
+              {{ comment.author.username }}
+            </span>
+            <small class="text-secondary">
+              {{ comment.createdAt | date: "MMMM d, y" }}
+            </small>
+          </div>
+          <div>
+            <button
+              *ngIf="isAuthor(comment)"
+              (click)="deleteComment(comment)"
+              class="btn btn-success p-2"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ------------------------------- -->
+  </div>
+</div>
