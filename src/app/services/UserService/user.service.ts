@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { currentUser } from 'src/app/models/currentUser';
+import { AuthService } from '../AuthService/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   baseURL: string = 'https://conduit.productionready.io/api/';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private auth: AuthService) {}
 
   getUser() {
     return this.http.get(

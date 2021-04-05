@@ -73,8 +73,25 @@
           >
         </li>
         <li class="nav-item" *ngIf="auth.isLogged">
-          <a class="nav-link" routerLinkActive="active" routerLink="profile">
-            {{ auth.currentUser.username }}
+          <a
+            class="nav-link mr-0 pr-0"
+            routerLinkActive="active"
+            routerLink="profile"
+          >
+            <img
+              src="{{ user.image }}"
+              class="rounded"
+              style="width: 25px; height: 25px"
+            />
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isLogged">
+          <a
+            class="nav-link pl-1"
+            routerLinkActive="active"
+            routerLink="profile"
+          >
+            {{ user.username }}
           </a>
         </li>
         <li class="nav-item">

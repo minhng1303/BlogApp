@@ -29,9 +29,9 @@ export class LoginComponent implements OnInit {
   login(email,password) {
     this.auth.login(email,password).toPromise().then(data => {
       let currentUser = {
-        username: data.user.username,
-        email: data.user.email,
-        token: data.user.token
+        username: data['user'].username,
+        email: data['user'].email,
+        token: data['user'].token
       }
       localStorage.setItem('user', JSON.stringify(currentUser))
       this.auth.isAuthenticated;

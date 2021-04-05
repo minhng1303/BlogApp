@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<currentUser>('https://conduit.productionready.io/api/users/login', {
+    return this.http.post('https://conduit.productionready.io/api/users/login', {
       user: {
         email: email,
         password: password
@@ -46,10 +46,11 @@ export class AuthService {
   get isAuthenticated(): boolean {
     let user = localStorage.getItem('user');
     if(!this.currentUser) {
-      if (!user) {      
+      if (user) {      
         this.currentUser = JSON.parse(user);
-        return false;     
+        return true
       }
+      return false;     
     }
     this.currentUser = JSON.parse(user); 
     this.isLogged = true;  
