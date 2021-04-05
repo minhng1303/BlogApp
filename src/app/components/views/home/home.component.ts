@@ -11,17 +11,18 @@ import { AuthService } from 'src/app/services/AuthService/auth.service';
 })
 export class HomeComponent implements OnInit {
   articles: Article[];
-  slugArticle: Article;
+  slugArticle: Article[];
+  tagArticle: Article[];
   chipList;
   selectedChip: string = '';
   selectedTab: string = 'Global Feed'
-  isFavorited: boolean = false;
   headingTab: string[] = ['My Feed', 'Global Feed',]
   constructor(private articleService: ArticleService, private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.articleService.getArticle().subscribe((res: any) => {
-      this.articles = res.articles;
+      this.slugArticle = res['articles'];
+      this.articles = this.slugArticle;
     });
     this.articleService.getTag().subscribe((res: any) => {
       this.chipList = res.tags;
@@ -35,7 +36,8 @@ export class HomeComponent implements OnInit {
 
   showTagArticle(e) {
     this.articleService.getArticleByTag(e).subscribe(res => {
-      this.articles = res['articles']
+      this.tagArticle = res['articles']
+      this.articles = this.tagArticle;
       this.selectedChip = e;
       this.selectedTab = `#${e}`;      
       if (this.headingTab.length > 2) {
@@ -43,48 +45,15 @@ export class HomeComponent implements OnInit {
       }
       this.headingTab.push(`#${e}`); 
     })
-    
   }
-
-  addFavorite(article) {
-    if (!this.authService.isAuthenticated) {
-      this.router.navigate(['/','login']);
-      return;
-    }
-    if (!article.favorited) {
-      this.articleService.addFavoriteArticle(article.slug).subscribe(res => {
-        this.articles.map(ele => {
-          if (ele.slug == article.slug) {
-            article.favorited = true;
-            article.favoritesCount++;
-            }
-          })
-        });
-        return
-    }
-    console.log(1);
-    this.articleService.removeFavoriteArticle(article.slug).subscribe(res => {
-      this.articles.map(ele => {
-        if (ele.slug == article.slug) {
-          article.favorited = false;
-          article.favoritesCount--;
-        }
-      })
-    }); 
-  }
-  // removeFavorite(article) {
-  //   this.articleService.removeFavoriteArticle(article.slug).subscribe(res => {
-  //     // console.log(res);
-  //     this.isFavorited = false;
-  //     this.articleService.getArticle().subscribe((res: any) => {
-  //       this.articles = res.articles;
-  //     });
-  //   })
-  // }
 
   selectTab(tab: string) {
+    if (this.selectedTab == tab) return
     this.selectedTab = tab;
-    console.log(tab);
-    
+    if (tab.includes('#')) {
+      this.articles = this.tagArticle;
+      return
+    } 
+    this.articles = this.slugArticle;
   }
 }

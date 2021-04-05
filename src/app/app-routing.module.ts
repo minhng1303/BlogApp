@@ -39,11 +39,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'self',
+        redirectTo: 'my-article',
         pathMatch: 'full',
       },
       {
-        path: 'self',
+        path: 'my-article',
         component: MyArticleComponent,
         canActivate: [AuthGuard],
       },
