@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-
 @Component({
   selector: 'app-chips',
   templateUrl: './chips.component.html',
@@ -9,12 +8,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ChipsComponent {
   @Input('chipList') tagList: string[];
   @Output() tag: string;
-  @Output() showTagArticle = new EventEmitter()
+  @Output() showTagArticle = new EventEmitter();
   constructor() {}
   selectedChip: string = '';
+
   showTagByArticle(tag) {
     // this.tag = tag;
-    this.showTagArticle.emit(tag)
+    this.showTagArticle.emit(tag);
     this.selectedChip = tag;
   }
 }

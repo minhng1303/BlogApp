@@ -159,7 +159,12 @@
               />
             </svg>
           </span>
-          <span> Follow {{ getAuthor }} </span>
+          <span (click)="followAuthor()" *ngIf="!isFollowed">
+            Follow {{ getAuthor }}
+          </span>
+          <span (click)="unFollowAuthor()" *ngIf="isFollowed">
+            Unfollow {{ getAuthor }}
+          </span>
         </button>
         <button
           *ngIf="getAuthor !== currentUser.username"

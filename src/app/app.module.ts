@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/views/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/views/footer/footer.component';
@@ -55,7 +56,9 @@ import { NewArticleComponent } from './components/views/new-article/new-article.
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
+    NgxSpinnerModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     ArticleService,
     AuthService,

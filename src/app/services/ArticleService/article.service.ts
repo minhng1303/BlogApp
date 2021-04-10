@@ -41,12 +41,6 @@ export class ArticleService {
     );
   }
 
-  getSingleArticle(slug: string) {
-    return this.http.get(
-      'https://conduit.productionready.io/api/articles/:' + slug
-    );
-  }
-
   getCommentArticle(slug) {
     return this.http.get(
       'https://conduit.productionready.io/api/articles/' + slug + '/comments'

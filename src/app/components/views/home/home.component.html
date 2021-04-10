@@ -1,4 +1,4 @@
-<div>
+<div class="home">
   <div class="row w-100 mb-3">
     <div
       class="col-12 text-center text-light bg-success d-flex flex-column p-3"
@@ -23,7 +23,7 @@
         </ul>
         <!-- <app-tab []></app-tab> -->
         <div
-          class="card mb-2 w-100 p-2"
+          class="card mb-1 w-100 p-2"
           style="width: 18rem"
           *ngFor="let article of articles"
         >
@@ -88,7 +88,7 @@
             </div>
           </div>
 
-          <div class="card-body">
+          <div class="card-body pl-3">
             <h5 (click)="goToArticle(article)">
               <a> {{ article.title }} </a>
             </h5>
@@ -109,6 +109,7 @@
           [chipList]="chipList"
           (showTagArticle)="showTagArticle($event)"
         ></app-chips>
+        <app-footer></app-footer>
       </div>
     </div>
   </div>

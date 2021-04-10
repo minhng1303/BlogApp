@@ -5,18 +5,16 @@ import { AuthService } from 'src/app/services/AuthService/auth.service';
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.scss']
+  styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
-
+  showDropdown = false;
   logOut() {
     localStorage.removeItem('user');
     this.auth.setLogout();
-    this.router.navigate(['login'])
+    this.router.navigate(['login']);
   }
-  constructor(public auth: AuthService, private router: Router) { }
+  constructor(public auth: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

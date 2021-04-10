@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ArticleService } from 'src/app/services/ArticleService/article.service';
 import { AuthService } from 'src/app/services/AuthService/auth.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-new-article',
@@ -16,11 +17,15 @@ export class NewArticleComponent implements OnInit {
     private router: Router,
     private articleService: ArticleService,
     private auth: AuthService,
-
+    private spinner: NgxSpinnerService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 5000);
     this.createArticleForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(3)]],
