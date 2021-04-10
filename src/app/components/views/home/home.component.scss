@@ -14,6 +14,18 @@ a {
   font-size: medium;
 }
 .active-tab {
-  color: #5cb85c !important;
-  border-bottom: 1px solid #5cb85c;
+  color: rgb(153, 50, 204) !important;
+  border-bottom: 1px solid rgb(153, 50, 204);
+}
+
+.bg-insta {
+  background: linear-gradient(
+    45deg,
+    #405de6,
+    #5851db,
+    #833ab4,
+    #c13584,
+    #e1306c,
+    #fd1d1d
+  );
 }

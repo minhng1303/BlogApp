@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Article } from 'src/app/models/articles';
 import { ArticleService } from 'src/app/services/ArticleService/article.service';
 import { AuthService } from 'src/app/services/AuthService/auth.service';
+import { ModalService } from 'src/app/services/ModalService/modal.service';
 import { UserService } from 'src/app/services/UserService/user.service';
 
 @Component({
@@ -16,9 +17,7 @@ export class ArticleComponent implements OnInit {
   slug: string = '';
   slugArticle: Article;
   slugComment: Comment[];
-  // userFavorited: Article[];
   isFavorited: boolean = false;
-  isFollowed: boolean = false;
   newComment: string = '';
   errorMessage: string = '';
   currentUser: {
@@ -32,7 +31,7 @@ export class ArticleComponent implements OnInit {
     private articleService: ArticleService,
     public authService: AuthService,
     private router: Router,
-    private userService: UserService
+    private dialog: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -61,18 +60,12 @@ export class ArticleComponent implements OnInit {
         .subscribe((res: Article) => {
           this.slugArticle = res['article'];
           this.isFavorited = this.slugArticle.favorited;
-          // console.log(res['article'])
         });
       this.articleService
         .getCommentArticle(this.slug)
         .subscribe((res: Comment) => {
           this.slugComment = res['comments'];
-          // console.log(res['comments']);
         });
-      // this.articleService.getArticleByFav(this.currentUser.username).subscribe((res: any) => {
-      //   this.userFavorited = res['articles'];
-      // console.log(res['articles']);
-      // })
     });
   }
 
@@ -131,7 +124,9 @@ export class ArticleComponent implements OnInit {
   }
 
   deleteComment(comment) {
-    this.articleService
+    this.dialog.openConfirmDialog().afterClosed().subscribe(res => {
+      if (res) {
+        this.articleService
       .deleteCommentArticle(this.slug, comment.id)
       .subscribe((res) => {
         this.articleService
@@ -140,51 +135,29 @@ export class ArticleComponent implements OnInit {
             this.slugComment = res['comments'];
           });
       });
+      }
+    })    
   }
 
-  deleteArticle(): void {
-    // this.authService.navigateIfNotLoged();
-    if (!this.authService.isAuthenticated) {
-      this.router.navigate(['/', 'login']);
-      return;
-    }
-    this.articleService.deleteArticle(this.slug).subscribe((res) => {
-      console.log('delete article successfully');
-      this.router.navigate(['/']);
-    });
-  }
+  // addFavoriteArticle() {
+  //   if (!this.authService.isAuthenticated) {
+  //     this.router.navigate(['/', 'login']);
+  //     return;
+  //   }
+  //   this.articleService.addFavoriteArticle(this.slug).subscribe((res) => {
+  //     this.isFavorited = true;
+  //   });
+  // }
 
-  addFavoriteArticle() {
-    if (!this.authService.isAuthenticated) {
-      this.router.navigate(['/', 'login']);
-      return;
-    }
-    this.articleService.addFavoriteArticle(this.slug).subscribe((res) => {
-      // console.log(res);
-      this.isFavorited = true;
-    });
-  }
+  // removeFavorite() {
+  //   if (!this.authService.isAuthenticated) {
+  //     this.router.navigate(['/', 'login']);
+  //     return;
+  //   }
+  //   this.articleService.removeFavoriteArticle(this.slug).subscribe((res) => {
+  //     this.isFavorited = false;
+  //   });
+  // }
 
-  removeFavorite() {
-    this.articleService.removeFavoriteArticle(this.slug).subscribe((res) => {
-      // console.log(res);
-      this.isFavorited = false;
-    });
-  }
 
-  followAuthor() {
-    if (!this.authService.isAuthenticated) {
-      this.router.navigate(['/', 'login']);
-      return;
-    }
-    this.userService.followUser(this.getAuthor).subscribe((res) => {
-      this.isFollowed = true;
-    });
-  }
-
-  unFollowAuthor() {
-    this.userService.unFollowUser(this.getAuthor).subscribe((res) => {
-      this.isFollowed = false;
-    });
-  }
 }
