@@ -35,11 +35,17 @@ export class ArticleService {
     );
   }
 
-  skipArticle(limit: number, skip: number) {
+  getArticleOffset(offset:number) {
     return this.http.get(
-      'https://conduit.productionready.io/api/articles?limit' + skip
+      'https://conduit.productionready.io/api/articles?offset=' + offset
     );
-  }
+  } 
+
+  getArticleLimit(limit :number) {
+    return this.http.get(
+      'https://conduit.productionready.io/api/articles?limit=' + limit
+    );
+  } 
 
   getCommentArticle(slug) {
     return this.http.get(

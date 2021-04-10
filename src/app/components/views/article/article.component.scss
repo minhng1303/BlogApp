@@ -10,13 +10,9 @@
 .border-secondary:hover {
   background-color: lightgray;
 }
-
 .mb-10 {
   margin-bottom: 60px;
 }
-// .bg-lightgrey {
-//   background-color: lightgrey;
-// }
 textarea {
   border: none;
 }
@@ -38,10 +34,4 @@ textarea {
 }
 .border-danger:hover {
   background-color: lightcoral;
-}
-.isFavorited {
-  background-color: #5cb85c;
-}
-.isNotFavorited {
-  background-color: white;
 }

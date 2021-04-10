@@ -1,7 +1,9 @@
-<nav class="navbar navbar-expand-lg bg-light fixed-top">
-  <div class="container">
-    <a class="navbar-brand" routerLink="" routerLinkActive="active">Conduit</a>
-    <div class="collapse navbar-collapse">
+<nav class="container navbar navbar-expand-lg navbar-light">
+  <div class="row w-100 align-items-center py-0">
+    <a class="navbar-brand col-5 mr-0" routerLink="" routerLinkActive="active"
+      >Instagram</a
+    >
+     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item mx-1">
           <!-- <a class="nav-link" routerLink="" routerLinkActive="active">Home</a> -->
@@ -19,8 +21,8 @@
             <span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="25"
+                width="20"
+                height="20"
                 fill="currentColor"
                 class="bi bi-pencil-square"
                 viewBox="0 0 16 16"
@@ -49,8 +51,8 @@
             ><span
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="25"
+                width="20"
+                height="20"
                 fill="currentColor"
                 class="bi bi-gear"
                 viewBox="0 0 16 16"
@@ -81,8 +83,33 @@
             class="d-flex justify-content-center align-items-center dropdown dropdown-toggle"
             (click)="showDropdown = !showDropdown"
             (blur)="showDropdown = false"
+
+          <a
+            class="nav-link mr-0 pr-0"
+            routerLinkActive="active"
+            routerLink="profile"
           >
-            <button
+            <img
+              src="{{ user.image }}"
+              class="rounded"
+              style="width: 20x; height: 20px"
+            />
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isLogged">
+          <a
+            class="nav-link pl-1"
+            routerLinkActive="active"
+            routerLink="profile"
+          >
+            {{ user.username }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="auth.isLogged" (click)="logOut()"
+            >Sign Out</a
+          >
+<!--             <button
               class="d-flex justify-content-center align-items-center btn p-0"
               type="button"
             >
@@ -93,15 +120,15 @@
               >
                 {{ auth.currentUser.username }}
               </a>
-            </button>
-            <div
+            </button> -->
+<!--             <div
               class="dropdown-menu dropdown-menu-right"
               [class.show]="showDropdown"
             >
               <div class="dropdown-item" (click)="logOut()">
                 <a class="nav-link" *ngIf="auth.isLogged">Sign Out</a>
               </div>
-            </div>
+            </div> -->
           </div>
         </li>
       </ul>

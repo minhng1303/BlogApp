@@ -43,6 +43,7 @@ export class SettingComponent implements OnInit {
                                   this.settingForm.value.image,
                                   this.settingForm.value.username)
       .subscribe(res => {
+        this.auth.currentUser.username =  this.settingForm.value.username;
         this.router.navigate(['/'])
       })
     }

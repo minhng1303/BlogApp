@@ -1,4 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
+
 import {
   HttpRequest,
   HttpHandler,
@@ -20,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
           Authorization: `Token ${this.auth.currentUser.token}`
         })
       })
-      return next.handle(authRequest);
+      return next.handle(authRequest)
     } 
     return next.handle(request)
   }

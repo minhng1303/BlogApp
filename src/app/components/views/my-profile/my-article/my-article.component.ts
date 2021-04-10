@@ -29,13 +29,11 @@ export class MyArticleComponent implements OnInit {
       .getArticleByAuthor(this.auth.currentUser.username)
       .subscribe((res: any) => {
         this.myArticles = res.articles;
-        console.log(this.myArticles);
+        this.myArticles = res['articles'];
       });
   }
 
   goToMyArticle(myArticle) {
-    console.log(myArticle);
-
     let mySlugArticle = myArticle.slug;
     this.router.navigate([`article/${mySlugArticle}`]);
   }

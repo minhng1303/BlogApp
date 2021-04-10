@@ -26,6 +26,18 @@ import { MyProfileComponent } from './components/views/my-profile/my-profile.com
 import { MyArticleComponent } from './components/views/my-profile/my-article/my-article.component';
 import { FavoritedArticleComponent } from './components/views/my-profile/favorited-article/favorited-article.component';
 import { NewArticleComponent } from './components/views/new-article/new-article.component';
+import { RecommenderComponent } from './components/commons/recommender/recommender.component';
+import { FollowButtonComponent } from './components/commons/follow-button/follow-button.component';
+import { DeleteButtonComponent } from './components/commons/delete-button/delete-button.component';
+import { EditButtonComponent } from './components/commons/edit-button/edit-button.component';
+import { FavoriteButtonComponent } from './components/commons/favorite-button/favorite-button.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import {MatDialogModule} from '@angular/material/dialog';
+import { DialogComponent } from './components/commons/dialog/dialog.component';
+import {MatButtonModule} from '@angular/material/button';
+import { OptionDialogComponent } from './components/commons/option-dialog/option-dialog.component';
+
+
 
 @NgModule({
   declarations: [
@@ -45,8 +57,19 @@ import { NewArticleComponent } from './components/views/new-article/new-article.
     FavoritedArticleComponent,
     MyArticleComponent,
     NewArticleComponent,
+    RecommenderComponent,
+    FollowButtonComponent,
+    DeleteButtonComponent,
+    EditButtonComponent,
+    FavoriteButtonComponent,
+    DialogComponent,
+    OptionDialogComponent,
   ],
+  entryComponents: [DialogComponent],
   imports: [
+    MatButtonModule,
+    MatDialogModule,
+    NgxSpinnerModule,
     MatChipsModule,
     MatTabsModule,
     HttpClientModule,
