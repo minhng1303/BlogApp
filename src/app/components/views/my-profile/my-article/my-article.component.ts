@@ -28,9 +28,8 @@ export class MyArticleComponent implements OnInit {
     this.articleService
       .getArticleByAuthor(this.auth.currentUser.username)
       .subscribe((res: any) => {
-        this.myArticles = res['articles'];
+        this.myArticles = res.articles;
         console.log(this.myArticles);
-        
       });
   }
 

@@ -12,33 +12,24 @@ export class UserService {
               private auth: AuthService) {}
 
   getUser() {
-    return this.http.get(
-      this.baseURL + `user`
-    );
+    return this.http.get(this.baseURL + `user`);
   }
 
   followUser(username) {
-    return this.http.post(
-      this.baseURL + `profiles/${username}/follow`,
-      {}
-    );
+    return this.http.post(this.baseURL + `profiles/${username}/follow`, {});
   }
 
   unFollowUser(username) {
-    return this.http.delete(
-      this.baseURL + `profiles/${username}/follow`
-    );
+    return this.http.delete(this.baseURL + `profiles/${username}/follow`);
   }
 
-  updateUser(bio,image,username) {    
-    return this.http.put(this.baseURL +'user', 
-    {
-      user:
-      {
-          bio: bio,
-          image: image,
-          username: username
-      } 
-    })
+  updateUser(bio, image, username) {
+    return this.http.put(this.baseURL + 'user', {
+      user: {
+        bio: bio,
+        image: image,
+        username: username,
+      },
+    });
   }
 }

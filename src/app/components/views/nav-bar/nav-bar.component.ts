@@ -6,12 +6,14 @@ import { UserService } from 'src/app/services/UserService/user.service';
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.scss']
+  styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
-  user = {};
-  
-  constructor(public auth: AuthService, private router: Router, private userService: UserService,) { }
+  showDropdown = false;
+  user = {
+    username: ' '
+  }
+  constructor(public auth: AuthService, private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
     this.auth.isAuthenticated;    
@@ -19,11 +21,10 @@ export class NavBarComponent implements OnInit {
       this.user = res['user']
     })        
   }
-
   logOut() {
     localStorage.removeItem('user');
     this.auth.setLogout();
-    this.router.navigate(['login'])
+    this.router.navigate(['login']);
   }
-
 }
+

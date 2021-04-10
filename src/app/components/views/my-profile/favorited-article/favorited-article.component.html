@@ -1,44 +1,54 @@
 <div
-  class="card mb-2 w-100 p-2"
+  class="myProfile-container card mb-4 w-75 p-2"
   style="width: 18rem"
   *ngFor="let favoritedArticle of favoritedArticles"
 >
   <div class="d-flex">
     <img src="{{ userImage }}" class="card-img-top img m-2" alt="..." />
     <div class="m-1 mr-auto">
-      <h3 (click)="goToArticle(favoritedArticle)" class="m-0">
+      <h5 (click)="goToMyArticle(myArticle)" class="m-0">
         <a>{{ favoritedArticle.author.username }} </a>
-      </h3>
-      <p class="m-0">{{ favoritedArticle.createdAt | date }}</p>
+      </h5>
     </div>
     <div>
-      <button type="button" class="btn btn-outline-success m-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-heart"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
-          />
-        </svg>
-        {{ favoritedArticle.favoritesCount }}
-      </button>
+      <p class="m-0">{{ favoritedArticle.createdAt | date }}</p>
     </div>
   </div>
 
-  <div class="card-body">
-    <h5 (click)="goToArticle(Article)">
-      <a> {{ favoritedArticle.title }} </a>
-    </h5>
-    <p (click)="goToArticle(Article)">
-      <a>{{ favoritedArticle.body }}</a>
-    </p>
-    <span (click)="goToArticle(Article)" class="btn btn-link p-0"
-      >Read more</span
-    >
+  <div class="topic">
+    <div class="text-center mt-4">
+      <h5 (click)="goToMyArticle(myArticle)">
+        <a> {{ favoritedArticle.title }} </a>
+      </h5>
+      <p (click)="goToMyArticle(myArticle)">
+        <a>{{ favoritedArticle.body }}</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center">
+    <button type="button" class="btn btn-outline-danger m-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-heart"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
+        />
+      </svg>
+      {{ favoritedArticle.favoritesCount }}
+    </button>
+    <div class="m-2">
+      <button class="btn btn-outline-primary">Comment</button>
+    </div>
+    <div class="m-2">
+      <button (click)="goToMyArticle(myArticle)" class="btn btn-outline-info">
+        Read more
+      </button>
+    </div>
   </div>
 </div>

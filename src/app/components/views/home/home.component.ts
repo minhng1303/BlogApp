@@ -1,4 +1,4 @@
-import { ArticleService } from 'src/app/services/ArticleService/article.service'
+import { ArticleService } from 'src/app/services/ArticleService/article.service';
 import { Component, OnInit } from '@angular/core';
 import { Article } from 'src/app/models/articles';
 import { Router } from '@angular/router';
@@ -65,9 +65,9 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  goToArticle(article) {    
-    let slug = article.slug
-    this.router.navigate([`article/${slug}`])
+  goToArticle(article) {
+    let slug = article.slug;
+    this.router.navigate([`article/${slug}`]);
   }
 
   showTagArticle(e) {
@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
       this.tagArticle = res['articles']
       this.articles = this.tagArticle;
       this.selectedChip = e;
-      this.selectedTab = `#${e}`;      
+      this.selectedTab = `#${e}`;
       if (this.headingTab.length > 2) {
         this.headingTab.pop();
       }

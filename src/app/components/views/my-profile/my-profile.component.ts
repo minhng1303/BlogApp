@@ -16,6 +16,7 @@ import { UserService } from 'src/app/services/UserService/user.service';
 export class MyProfileComponent implements OnInit {
   currentUser;
   userImage;
+  showActiveTab;
   constructor(
     private articleService: ArticleService,
     private auth: AuthService,
@@ -25,16 +26,20 @@ export class MyProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = '';
-    this.userService.getUser().subscribe(res => {
+    this.userService.getUser().subscribe((res) => {
       this.articleService
-      .getProfile(res['user'].username)
-      .subscribe((res: any) => {
-        this.currentUser = res.profile;
-      });
-    })    
+        .getProfile(res['user'].username)
+        .subscribe((res: any) => {
+          this.currentUser = res.profile;
+        });
+    });
   }
 
   goToSetting() {
     this.router.navigate(['setting']);
+  }
+
+  showActive() {
+    this.showActiveTab = !!this.showActiveTab;
   }
 }
