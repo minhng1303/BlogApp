@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/UserService/user.service';
 export class NavBarComponent implements OnInit {
   user = {};
   
-  constructor(public auth: AuthService, private router: Router, private userService: UserService) { }
+  constructor(public auth: AuthService, private router: Router, private userService: UserService,) { }
 
   ngOnInit(): void {
     this.auth.isAuthenticated;    

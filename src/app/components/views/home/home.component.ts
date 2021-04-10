@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { Article } from 'src/app/models/articles';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/AuthService/auth.service';
+import { UserService } from 'src/app/services/UserService/user.service';
+import { NgxSpinnerService } from "ngx-spinner";
+import { ModalService } from 'src/app/services/ModalService/modal.service';
+
 
 @Component({
   selector: 'app-home',
@@ -17,15 +21,47 @@ export class HomeComponent implements OnInit {
   selectedChip: string = '';
   selectedTab: string = 'Global Feed'
   headingTab: string[] = ['My Feed', 'Global Feed',]
-  constructor(private articleService: ArticleService, private router: Router, private authService: AuthService) {}
+  totalItems: number = 0;
+  itemsPerPage: number = 5;
+  tagList=  [];
+  recommendedUser = []
+  constructor(private articleService: ArticleService, private router: Router, 
+              private authService: AuthService, private userService: UserService,
+              private spinner: NgxSpinnerService, private dialog: ModalService) {}
 
   ngOnInit(): void {
+    this.spinner.show();
     this.articleService.getArticle().subscribe((res: any) => {
-      this.slugArticle = res['articles'];
-      this.articles = this.slugArticle;
+      this.totalItems = res['articles'].length
+      this.slugArticle = res['articles'];      
+      this.getPageArticles(0);
+      this.spinner.hide();
     });
+
     this.articleService.getTag().subscribe((res: any) => {
-      this.chipList = res.tags;
+      this.chipList = res.tags.filter(e => 
+        JSON.stringify(e).replace( /\W/g, '').length
+      )
+    })
+
+    this.articleService.getArticleLimit(10).subscribe((res:any) => {      
+      res['articles'].forEach(ele => {
+        this.recommendedUser.push(ele.author)
+      })
+    })
+  }
+
+  getPageArticles(page) {
+      this.articles = this.slugArticle.slice(page*5, page*5+5)
+    }
+    
+  handlePageChange(page: number) {
+    this.getPageArticles(page);    
+  }
+  
+  showOption() {
+    this.dialog.openOptionDialog().afterClosed().subscribe(res => {
+      
     })
   }
 

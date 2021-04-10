@@ -1,10 +1,10 @@
 <div>
-  <div class="row w-100 mb-3">
+  <div class="row w-100 mb-3 mx-0">
     <div
-      class="col-12 text-center text-light bg-success d-flex flex-column p-3"
+      class="col-12 text-center text-light bg-insta d-flex flex-column py-5 p-3"
     >
-      <h1 class="display-4"><strong>Conduit</strong></h1>
-      <p class="mb-2">A place to share your knowledge.</p>
+      <h1 class="display-4"><strong>Instagram</strong></h1>
+      <p class="mb-2">A place to share your emotions and feelings.</p>
     </div>
   </div>
 
@@ -21,36 +21,48 @@
             >
           </li>
         </ul>
-        <!-- <app-tab []></app-tab> -->
         <div
-          class="card mb-2 w-100 p-2"
+          class="card mb-4 w-100 p-2"
           style="width: 18rem"
           *ngFor="let article of articles; let i; index"
         >
-          <div class="d-flex">
+          <div class="d-flex align-items-center px-0">
             <img
               src="https://static.productionready.io/images/smiley-cyrus.jpg"
-              class="card-img-top img m-2"
+              class="card-img-top rounded-circle m-1 img"
               alt="..."
+              style="width: 28px; height: 28px"
             />
-            <div class="m-1 mr-auto">
-              <h4 (click)="goToArticle(article)" class="m-0">
-                <a class="text-success">{{ article.author.username }} </a>
-              </h4>
-              <small class="m-0 text-secondary">{{
-                article.createdAt | date
-              }}</small>
+            <div class="d-flex flex-wrap ml-1">
+              <span class="pl-0 col-12" (click)="goToArticle(article)">
+                <a class="text-dark font-weight-bold"
+                  >{{ article.author.username }}
+                </a>
+              </span>
+              <small class="text-secondary"
+                >{{ article.createdAt | date }}
+              </small>
             </div>
-            <div>
-              <!-- --------FAVORITED-------- -->
-              <app-like-button
-                [article]="article"
-                [articles]="articles"
-              ></app-like-button>
+
+            <div class="mt-1 mr-2 ml-auto">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-three-dots"
+                (click)="showOption()"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+                />
+              </svg>
             </div>
           </div>
-
-          <div class="card-body">
+          <hr />
+          <!-- -----CARD BORDY------ -->
+          <div class="card-body border-bottom">
             <h5 (click)="goToArticle(article)">
               <a> {{ article.title }} </a>
             </h5>
@@ -64,56 +76,35 @@
               Read more
             </small>
           </div>
+          <!-- -----CARD BORDY------ -->
+          <app-like-button
+            [article]="article"
+            [articles]="articles"
+          ></app-like-button>
+          <!-- ------ICON BOX-------- -->
+          <div class="col-4">
+            <span> {{ article.favoritesCount }} likes </span>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <app-pagination
+            [totalItems]="totalItems"
+            [itemsPerPage]="itemsPerPage"
+            (onPageChange)="handlePageChange($event)"
+          ></app-pagination>
         </div>
       </div>
+      <!-- ------SIDE BOX------- -->
       <div class="col-4 mt-5">
+        <!-- ------APP CHIP---------->
         <app-chips
           [chipList]="chipList"
           (showTagArticle)="showTagArticle($event)"
         ></app-chips>
+        <!-- ------RECOMMENDED USER---------->
+        <app-recommender [recommendedUser]="recommendedUser"></app-recommender>
+        <!-- ------------------------- -->
       </div>
     </div>
   </div>
 </div>
-<!-- <button
-                type="button"
-                class="btn btn-outline-success m-2"
-                (click)="addFavorite(article)"
-                *ngIf="!article.favorited"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-heart"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
-                  />
-                </svg>
-                {{ article.favoritesCount }}
-              </button>
-              < ---------UNFAVORITED-------- -->
-<!-- <button
-                type="button"
-                class="btn btn-outline-success m-2"
-                (click)="addFavorite(article)"
-                *ngIf="article.favorited"
-                [class.isFavorited]="article.favorited"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-heart"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
-                  />
-                </svg>
-                {{ article.favoritesCount }}
-              </button> -->
