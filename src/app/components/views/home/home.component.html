@@ -20,8 +20,6 @@
           </li>
         </ul>
         <div
-    class="card mb-1 w-100 p-2"  
-
           class="card mb-4 w-100 p-2"
           style="width: 18rem"
           *ngFor="let article of articles; let i; index"
@@ -62,32 +60,34 @@
           </div>
 
           <div class="card-body pl-3">
-          <hr />
-          <!-- -----CARD BORDY------ -->
-          <div class="card-body border-bottom">
-            <h5 (click)="goToArticle(article)">
-              <a> {{ article.title }} </a>
-            </h5>
-            <p (click)="goToArticle(article)">
-              <a>{{ article.body }}</a>
-            </p>
-            <small
-              (click)="goToArticle(article)"
-              class="text-secondary btn btn-link p-0"
-            >
-              Read more
-            </small>
-          </div>
-          <!-- -----CARD BORDY------ -->
-          <app-like-button
-            [article]="article"
-            [articles]="articles"
-          ></app-like-button>
-          <!-- ------ICON BOX-------- -->
-          <div class="col-4">
-            <span> {{ article.favoritesCount }} likes </span>
+            <hr />
+            <!-- -----CARD BORDY------ -->
+            <div class="card-body border-bottom">
+              <h5 (click)="goToArticle(article)">
+                <a> {{ article.title }} </a>
+              </h5>
+              <p (click)="goToArticle(article)">
+                <a>{{ article.body }}</a>
+              </p>
+              <small
+                (click)="goToArticle(article)"
+                class="text-secondary btn btn-link p-0"
+              >
+                Read more
+              </small>
+            </div>
+            <!-- -----CARD BORDY------ -->
+            <app-like-button
+              [article]="article"
+              [articles]="articles"
+            ></app-like-button>
+            <!-- ------ICON BOX-------- -->
+            <div class="col-4">
+              <span> {{ article.favoritesCount }} likes </span>
+            </div>
           </div>
         </div>
+        <!-- ------SIDE BOX------- -->
         <div class="d-flex justify-content-center">
           <app-pagination
             [totalItems]="totalItems"
@@ -96,7 +96,6 @@
           ></app-pagination>
         </div>
       </div>
-      <!-- ------SIDE BOX------- -->
       <div class="col-4 mt-5">
         <!-- ------APP CHIP---------->
         <app-chips

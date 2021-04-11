@@ -25,7 +25,7 @@ export class NewArticleComponent implements OnInit {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-    }, 5000);
+    }, 3000);
     this.createArticleForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(3)]],
