@@ -20,6 +20,8 @@
           </li>
         </ul>
         <div
+    class="card mb-1 w-100 p-2"  
+
           class="card mb-4 w-100 p-2"
           style="width: 18rem"
           *ngFor="let article of articles; let i; index"
@@ -58,6 +60,8 @@
               </svg>
             </div>
           </div>
+
+          <div class="card-body pl-3">
           <hr />
           <!-- -----CARD BORDY------ -->
           <div class="card-body border-bottom">
@@ -99,7 +103,6 @@
           [chipList]="chipList"
           (showTagArticle)="showTagArticle($event)"
         ></app-chips>
-
         <!-- ------RECOMMENDED USER---------->
         <app-recommender [recommendedUser]="recommendedUser"></app-recommender>
         <!-- ------------------------- -->

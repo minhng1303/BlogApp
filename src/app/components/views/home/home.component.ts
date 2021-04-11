@@ -19,8 +19,10 @@ export class HomeComponent implements OnInit {
   tagArticle: Article[];
   chipList;
   selectedChip: string = '';
-  selectedTab: string = 'Global Feed'
-  headingTab: string[] = ['My Feed', 'Global Feed',]
+  selectedTab: string = 'Global Feed';
+  isFavorited: boolean = false;
+  headingTab: string[] = ['My Feed', 'Global Feed'];
+
   totalItems: number = 0;
   itemsPerPage: number = 5;
   tagList=  [];
@@ -39,7 +41,7 @@ export class HomeComponent implements OnInit {
     });
 
     this.articleService.getTag().subscribe((res: any) => {
-      this.chipList = res.tags.filter(e => 
+          this.chipList = res.tags.filter(e => 
         JSON.stringify(e).replace( /\W/g, '').length
       )
     })
@@ -79,11 +81,48 @@ export class HomeComponent implements OnInit {
       if (this.headingTab.length > 2) {
         this.headingTab.pop();
       }
-      this.headingTab.push(`#${e}`); 
-    })
+      this.headingTab.push(`#${e}`);
+    });
   }
 
-  selectTab(tab: string) {
+  addFavorite(article) {
+    if (!this.authService.isAuthenticated) {
+      this.router.navigate(['/', 'login']);
+      return;
+    }
+    if (!article.favorited) {
+      this.articleService.addFavoriteArticle(article.slug).subscribe((res) => {
+        this.articles.map((ele) => {
+          if (ele.slug == article.slug) {
+            article.favorited = true;
+            article.favoritesCount++;
+          }
+        });
+      });
+      return;
+    }
+    console.log(1);
+    this.articleService.removeFavoriteArticle(article.slug).subscribe((res) => {
+      this.articles.map((ele) => {
+        if (ele.slug == article.slug) {
+          article.favorited = false;
+          article.favoritesCount--;
+        }
+      });
+    });
+  }
+
+  // removeFavorite(article) {
+  //   this.articleService.removeFavoriteArticle(article.slug).subscribe(res => {
+  //     // console.log(res);
+  //     this.isFavorited = false;
+  //     this.articleService.getArticle().subscribe((res: any) => {
+  //       this.articles = res.articles;
+  //     });
+  //   })
+  // }
+
+   selectTab(tab: string) {
     if (this.selectedTab == tab) return
     this.selectedTab = tab;
     if (tab.includes('#')) {

@@ -71,12 +71,14 @@
         </span>
       </div>
       <div>
+
         <app-follow-button
           *ngIf="getAuthor !== currentUser.username"
           [slugArticle]="slugArticle"
         ></app-follow-button>
 
         <app-favorite-button
+        
           *ngIf="getAuthor !== currentUser.username"
           [slugArticle]="slugArticle"
         ></app-favorite-button>

@@ -1,6 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/views/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/views/footer/footer.component';
@@ -30,7 +31,6 @@ import { FollowButtonComponent } from './components/commons/follow-button/follow
 import { DeleteButtonComponent } from './components/commons/delete-button/delete-button.component';
 import { EditButtonComponent } from './components/commons/edit-button/edit-button.component';
 import { FavoriteButtonComponent } from './components/commons/favorite-button/favorite-button.component';
-import { NgxSpinnerModule } from "ngx-spinner";
 import {MatDialogModule} from '@angular/material/dialog';
 import { DialogComponent } from './components/commons/dialog/dialog.component';
 import {MatButtonModule} from '@angular/material/button';
