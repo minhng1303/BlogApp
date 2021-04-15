@@ -2,17 +2,24 @@
   <div
     class="col-12 py-5 d-flex justify-content-center align-items-center flex-wrap"
   >
-    <div class="col-12 text-center">
-      <img
-        class="img my-2"
-        src="{{ currentUser.image }}"
-        alt=""
-        style="width: 180px; height: 180px"
-      />
+    <div class="row">
+      <div class="col-6 text-center">
+        <img
+          class="img my-2"
+          src="{{ currentUser.image }}"
+          alt=""
+          style="width: 180px; height: 180px"
+        />
+      </div>
+      <div class="col-6 text-light">
+        <h2>
+          {{ userInfo.username }}
+        </h2>
+        <p>Id: {{ userInfo.id }}</p>
+        <p>Email: {{ userInfo.email }}</p>
+        <p>Account created at: {{ userInfo.createdAt | date }}</p>
+      </div>
     </div>
-
-    <h1 class="text-light col-12 text-center">{{ currentUser.username }}</h1>
-    <span class="text-light col-12 text-center"> {{ currentUser.bio }}</span>
   </div>
   <!-- --------------------------BODY----------------------------->
 </div>
@@ -87,47 +94,51 @@
 </div>
 
 <div class="row mx-auto rounded col-10 p-0 mt-4">
-  <div class="col-4 bg-light rounded d-flex flex-wrap p-0 pt-3">
-    <strong class="col-12 pl-3">Introduce</strong>
-    <div class="col-12 px-2 d-flex align-items-center">
-      <img
-        class="hu5pjgll cwsop09l mr-1"
-        src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/id4jdGYPaIP.png"
-        alt=""
-        height="20"
-        width="20"
-      />
-      <span> Studied at <strong>Le Quy Don highschool, Hanoi</strong></span>
-    </div>
-    <div class="col-12 px-2 d-flex align-items-center">
-      <img
-        class="hu5pjgll cwsop09l mr-1"
-        src="https://static.xx.fbcdn.net/rsrc.php/v3/yk/r/X_t0JnueVu-.png"
-        alt=""
-        height="20"
-        width="20"
-      />
-      <span> Live at <strong> Hanoi </strong></span>
-    </div>
-    <div class="col-12 px-2 d-flex align-items-center">
-      <img
-        class="hu5pjgll cwsop09l mr-1"
-        src="https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/S0aTxIHuoYO.png"
-        alt=""
-        height="20"
-        width="20"
-      />
-      <span>Dating</span>
-    </div>
-    <div class="col-12 px-2 d-flex align-items-center">
-      <img
-        class="hu5pjgll cwsop09l mr-1"
-        src="https://static.xx.fbcdn.net/rsrc.php/v3/yv/r/JanwljMyOww.png"
-        alt=""
-        height="20"
-        width="20"
-      />
-      <span> Have <strong>200 followers </strong></span>
+  <div class="col-4 rounded p-0">
+    <div class="bg-light rounded p-1">
+      <strong class="pl-3">Introduce:</strong>
+      <ul class="pl-3">
+        <li>
+          <img
+            class="hu5pjgll cwsop09l mr-1"
+            src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/id4jdGYPaIP.png"
+            alt=""
+            height="20"
+            width="20"
+          />
+          <span> Studied at <strong>Le Quy Don highschool, Hanoi</strong></span>
+        </li>
+        <li>
+          <img
+            class="hu5pjgll cwsop09l mr-1"
+            src="https://static.xx.fbcdn.net/rsrc.php/v3/yk/r/X_t0JnueVu-.png"
+            alt=""
+            height="20"
+            width="20"
+          />
+          <span> Live at <strong> Hanoi </strong></span>
+        </li>
+        <li>
+          <img
+            class="hu5pjgll cwsop09l mr-1"
+            src="https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/S0aTxIHuoYO.png"
+            alt=""
+            height="20"
+            width="20"
+          />
+          <span> Dating</span>
+        </li>
+        <li>
+          <img
+            class="hu5pjgll cwsop09l mr-1"
+            src="https://static.xx.fbcdn.net/rsrc.php/v3/yv/r/JanwljMyOww.png"
+            alt=""
+            height="20"
+            width="20"
+          />
+          <span> Have <strong>200 followers </strong></span>
+        </li>
+      </ul>
     </div>
   </div>
   <div class="col-8 pr-0">
