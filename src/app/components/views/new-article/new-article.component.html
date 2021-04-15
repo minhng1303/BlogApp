@@ -1,80 +1,82 @@
-<div class="container py-5 w-50">
-  <form
-    [formGroup]="createArticleForm"
-    (ngSubmit)="
-      creatArticle(
-        createArticleForm.value.title,
-        createArticleForm.value.description,
-        createArticleForm.value.body,
-        createArticleForm.value.tagList
-      )
-    "
-  >
-    <div class="form-group">
-      <input
-        type="text"
-        placeholder="Topics..."
-        class="form-control"
-        formControlName="description"
-        (blur)="log()"
-      />
-      <div
-        class="text-danger"
-        *ngIf="get('description').touched && get('description').invalid"
-      >
-        <small *ngIf="get('description').errors.required">
-          Description is required</small
+<div class="container bg-light text-dark py-5 w-50">
+  <div class="formSetting">
+    <form
+      [formGroup]="createArticleForm"
+      (ngSubmit)="
+        creatArticle(
+          createArticleForm.value.title,
+          createArticleForm.value.description,
+          createArticleForm.value.body,
+          createArticleForm.value.tagList
+        )
+      "
+    >
+      <div class="form-group">
+        <h3 class="text-center">Let's talk</h3>
+        <label>Topics you like</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="description"
+          (blur)="log()"
+        />
+        <div
+          class="text-danger"
+          *ngIf="get('description').touched && get('description').invalid"
         >
+          <small *ngIf="get('description').errors.required">
+            Description is required</small
+          >
 
-        <small *ngIf="get('description').errors.minlength">
-          Description is at least 3 characters
-        </small>
+          <small *ngIf="get('description').errors.minlength">
+            Description is at least 3 characters
+          </small>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <h3 class="text-center text-light">What are you thinking?</h3>
-      <input
-        type="text"
-        class="form-control py-4"
-        placeholder="Title:..."
-        formControlName="title"
-      />
-      <div
-        class="text-danger"
-        *ngIf="get('title').touched && get('title').invalid"
-      >
-        <small *ngIf="get('title').errors.required"> Title is required</small>
+      <div class="form-group">
+        <h3 class="text-center">What are you thinking?</h3>
+        <label>Title</label>
+        <input type="text" class="form-control py-4" formControlName="title" />
+        <div
+          class="text-danger"
+          *ngIf="get('title').touched && get('title').invalid"
+        >
+          <small *ngIf="get('title').errors.required"> Title is required</small>
 
-        <small *ngIf="get('title').errors.minlength">
-          Title is at least 3 characters
-        </small>
+          <small *ngIf="get('title').errors.minlength">
+            Title is at least 3 characters
+          </small>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <textarea
-        class="form-control p-3"
-        rows="3"
-        placeholder="Write something..."
-        formControlName="body"
-      ></textarea>
-      <div
-        class="text-danger"
-        *ngIf="get('body').touched && get('body').invalid"
-      >
-        <small *ngIf="get('title').errors.required"> Body is required</small>
+      <div class="form-group">
+        <label>Write about it</label>
+        <textarea
+          class="form-control p-3"
+          rows="3"
+          formControlName="body"
+        ></textarea>
+        <div
+          class="text-danger"
+          *ngIf="get('body').touched && get('body').invalid"
+        >
+          <small *ngIf="get('title').errors.required"> Body is required</small>
+        </div>
       </div>
-    </div>
-    <div class="form-group d-flex flex-row-reverse">
-      <button
-        type="submit"
-        class="btn btn-success"
-        [disabled]="!createArticleForm.valid"
-        [class.disabled]="!createArticleForm.valid"
-      >
-        Create
-      </button>
-    </div>
-  </form>
+      <div class="form-group d-flex justify-content-end">
+        <div>
+          <button class="btn cancelBtn" (click)="cancel()">Cancel</button>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-success editBtn"
+          [disabled]="!createArticleForm.valid"
+          [class.disabled]="!createArticleForm.valid"
+        >
+          Create
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

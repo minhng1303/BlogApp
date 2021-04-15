@@ -49,4 +49,8 @@ export class NewArticleComponent implements OnInit {
   log() {
     console.log(this.createArticleForm);
   }
+
+  cancel() {
+    this.router.navigate(['/new-article']);
+  }
 }
