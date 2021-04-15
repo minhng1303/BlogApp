@@ -16,11 +16,16 @@ export class NavBarComponent implements OnInit {
   constructor(public auth: AuthService, private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.auth.isAuthenticated;    
+    this.auth.isAuthenticated;
     this.userService.getUser().subscribe(res => {
       this.user = res['user']
-    })        
+    })            
   }
+
+  get getUserName() {
+    return this.user.username;
+  }
+  
   logOut() {
     localStorage.removeItem('user');
     this.auth.setLogout();

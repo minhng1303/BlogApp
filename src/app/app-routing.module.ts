@@ -10,10 +10,16 @@ import { NewArticleComponent } from './components/views/new-article/new-article.
 import { MyProfileComponent } from './components/views/my-profile/my-profile.component';
 import { MyArticleComponent } from './components/views/my-profile/my-article/my-article.component';
 import { FavoritedArticleComponent } from './components/views/my-profile/favorited-article/favorited-article.component';
+import { AboutUsComponent } from './components/views/about-us/about-us.component';
 
 const routes: Routes = [
   {
     path: '',
+    component: HomeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home',
     component: HomeComponent,
     canActivate: [AuthGuard],
   },
@@ -28,7 +34,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'new_article',
+    path: 'about-us',
+    component: AboutUsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'new-article',
     component: NewArticleComponent,
     canActivate: [AuthGuard],
   },

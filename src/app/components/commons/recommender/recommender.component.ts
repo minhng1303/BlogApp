@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ArticleService } from 'src/app/services/ArticleService/article.service';
 import { UserService } from 'src/app/services/UserService/user.service';
 
 @Component({
@@ -8,10 +9,18 @@ import { UserService } from 'src/app/services/UserService/user.service';
 })
 export class RecommenderComponent implements OnInit {
   @Input('recommendedUser') recommendedUser;
-  constructor(private userService: UserService) { }
+  feedUser = [];
+  constructor(private userService: UserService, private articleService: ArticleService) { }
 
   ngOnInit(): void {
+    this.articleService.getArticleLimit(10).subscribe((res:any) => { 
+      res['articles'].forEach(ele => {
+        this.recommendedUser.push(ele.author)       
+      })        
+    })
   }
+
+
 
   followUser(user) {
     this.userService.followUser(user.username).subscribe(res => {

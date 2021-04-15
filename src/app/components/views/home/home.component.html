@@ -1,7 +1,7 @@
 <div class="w-100 p-0">
-  <div class="row w-100 mx-0 my-3">
-    <div class="col-12 text-center text-light bg-insta d-flex flex-column py-3">
-      <h1 class="display-4"><strong>Instagram</strong></h1>
+  <div class="row w-100 mx-0 mb-1">
+    <div class="col-12 text-center text-light bg-insta d-flex flex-column py-4">
+      <h1 class="display-4"><strong>Unigram</strong></h1>
       <p class="mb-2">A place to share your emotions and feelings.</p>
     </div>
   </div>
@@ -9,20 +9,49 @@
   <div class="container">
     <div class="row">
       <div class="col-8">
+        <!-----------------TAB------------------->
         <ul class="nav nav-tabs mb-5">
           <li class="nav-item" *ngFor="let tab of headingTab">
             <a
-              class="nav-link text-dark"
+              class="nav-link text-light"
               (click)="selectTab(tab)"
               [class.active-tab]="selectedTab == tab"
               >{{ tab }}</a
             >
           </li>
         </ul>
+        <!-- -------------NEW POST-------------->
+        <div class="w-100 border bg-light rounded shadow-md mb-3">
+          <div class="d-flex align-items-center px-3">
+            <img
+              src="{{ currentUser.image }}"
+              alt="image"
+              class="rounded-circle"
+              style="width: 40px; height: 40px"
+            />
+
+            <input
+              placeholder="What are you thinking?"
+              class="new-post w-100 h-100 pl-2 pt-4 pb-3 bg-light"
+            />
+          </div>
+          <div class="w-100 py-3 px-4 d-flex justify-content-between">
+            <app-new-post-icon></app-new-post-icon>
+            <div>
+              <span
+                (click)="addPost('a', 'b', 'c', ['d'])"
+                class="badge badge-info text-light border border-info font-weight-bold p-2"
+                >Post
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- -------------BLOG CARD------------->
         <div
           class="card mb-4 w-100 p-2"
           style="width: 18rem"
-          *ngFor="let article of articles; let i; index"
+          *ngFor="let article of articles"
         >
           <div class="d-flex align-items-center px-0">
             <img
@@ -60,7 +89,7 @@
           </div>
 
           <div class="card-body pl-3">
-            <hr />
+            <hr class="mt-0" />
             <!-- -----CARD BORDY------ -->
             <div class="card-body border-bottom">
               <h5 (click)="goToArticle(article)">

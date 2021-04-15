@@ -1,22 +1,8 @@
-<!-- <mat-chip-list
-  class="example-chip"
-  cdkDropList
-  cdkDropListOrientation="horizontal"
-  (cdkDropListDropped)="drop($event)"
->
-  <mat-chip class="example-box" cdkDrag *ngFor="let vegetable of vegetables">
-    {{ vegetable.name }}
-  </mat-chip>
-</mat-chip-list> -->
-<!-- <mat-form-field> -->
 <mat-chip-list class="d-flex bg-lightgrey rounded p-3 tag-pill" #chipList>
   <mat-chip
     *ngFor="let tag of tagList"
     (click)="showTagByArticle(tag)"
-    [class.bg-success]="selectedChip == tag"
+    [class.bg-custom]="selectedChip == tag"
     >{{ tag }}</mat-chip
   >
 </mat-chip-list>
-
-<!-- <input [matChipInputFor]="chipList" /> -->
-<!-- </mat-form-field> -->

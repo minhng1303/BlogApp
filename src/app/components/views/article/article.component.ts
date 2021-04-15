@@ -138,26 +138,4 @@ export class ArticleComponent implements OnInit {
       }
     })    
   }
-
-  // addFavoriteArticle() {
-  //   if (!this.authService.isAuthenticated) {
-  //     this.router.navigate(['/', 'login']);
-  //     return;
-  //   }
-  //   this.articleService.addFavoriteArticle(this.slug).subscribe((res) => {
-  //     this.isFavorited = true;
-  //   });
-  // }
-
-  // removeFavorite() {
-  //   if (!this.authService.isAuthenticated) {
-  //     this.router.navigate(['/', 'login']);
-  //     return;
-  //   }
-  //   this.articleService.removeFavoriteArticle(this.slug).subscribe((res) => {
-  //     this.isFavorited = false;
-  //   });
-  // }
-
-
 }

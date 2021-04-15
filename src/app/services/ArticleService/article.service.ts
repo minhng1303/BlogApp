@@ -121,9 +121,4 @@ export class ArticleService {
     return this.http.get('https://conduit.productionready.io/api/tags');
   }
 
-  getProfile(val) {
-    return this.http.get(
-      `https://conduit.productionready.io/api/profiles/${val}`
-    );
-  }
 }

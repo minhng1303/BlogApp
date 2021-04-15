@@ -21,8 +21,8 @@ export class ModalService {
 
   openOptionDialog(){
     return this.dialog.open(OptionDialogComponent,{
-       width: '250px',
-       height: '200px',                       
+       width: '300px',
+       height: '250px',                       
        panelClass: 'app-full-bleed-dialog', 
        disableClose: true,
        position: { top: "150px" },

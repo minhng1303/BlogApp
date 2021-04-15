@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Article } from 'src/app/models/articles';
 import { ArticleService } from 'src/app/services/ArticleService/article.service';
 import { AuthService } from 'src/app/services/AuthService/auth.service';
@@ -19,15 +20,18 @@ export class FavoritedArticleComponent implements OnInit {
     private articleService: ArticleService,
     private auth: AuthService,
     private user: UserService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
+    this.spinner.show()
     this.getImageUrl;
     this.articleService
       .getArticleByFav(this.auth.currentUser.username)
       .subscribe((res: any) => {
         this.favoritedArticles = res.articles;
+        this.spinner.hide()
       });
   }
 

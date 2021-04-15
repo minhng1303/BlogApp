@@ -35,7 +35,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DialogComponent } from './components/commons/dialog/dialog.component';
 import {MatButtonModule} from '@angular/material/button';
 import { OptionDialogComponent } from './components/commons/option-dialog/option-dialog.component';
-
+import { ParticlesComponent } from './components/commons/particles/particles.component';
+import { AboutUsComponent } from './components/views/about-us/about-us.component';
+import { NewPostIconComponent } from './components/commons/new-post-icon/new-post-icon.component';
 
 
 @NgModule({
@@ -63,6 +65,9 @@ import { OptionDialogComponent } from './components/commons/option-dialog/option
     FavoriteButtonComponent,
     DialogComponent,
     OptionDialogComponent,
+    ParticlesComponent,
+    AboutUsComponent,
+    NewPostIconComponent,
   ],
   entryComponents: [DialogComponent],
   imports: [
@@ -79,6 +84,7 @@ import { OptionDialogComponent } from './components/commons/option-dialog/option
     ReactiveFormsModule,
     FormsModule,
     NgxSpinnerModule,
+    
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

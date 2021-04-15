@@ -8,8 +8,12 @@ a {
   cursor: pointer;
 }
 
+a.active {
+  color: #833ab4 !important;
+  border-bottom: 1px solid rgb(153, 50, 204) !important;
+}
+
 .profile-container {
-  padding: 60px 20px 20px 20px;
   margin: 0;
   background: linear-gradient(
     45deg,
@@ -20,6 +24,7 @@ a {
     #e1306c,
     #fd1d1d
   );
+
   .userinfo {
     div {
       color: white;

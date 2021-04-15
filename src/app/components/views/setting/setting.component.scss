@@ -1,0 +1,7 @@
+input:disabled {
+  background: rgb(167, 157, 157);
+  color: lightgray;
+}
+input:disabled::placeholder {
+  color: lightgray;
+}

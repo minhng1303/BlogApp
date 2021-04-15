@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/AuthService/auth.service';
 import { UserService } from 'src/app/services/UserService/user.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ModalService } from 'src/app/services/ModalService/modal.service';
+import { currentUser } from 'src/app/models/currentUser';
 
 
 @Component({
@@ -17,22 +18,26 @@ export class HomeComponent implements OnInit {
   articles: Article[];
   slugArticle: Article[];
   tagArticle: Article[];
+  userArticle: Article[];
   chipList;
   selectedChip: string = '';
   selectedTab: string = 'Global Feed';
   isFavorited: boolean = false;
   headingTab: string[] = ['My Feed', 'Global Feed'];
-
   totalItems: number = 0;
   itemsPerPage: number = 5;
   tagList=  [];
   recommendedUser = []
+  currentUser: any;
   constructor(private articleService: ArticleService, private router: Router, 
               private authService: AuthService, private userService: UserService,
               private spinner: NgxSpinnerService, private dialog: ModalService) {}
 
   ngOnInit(): void {
     this.spinner.show();
+    this.currentUser= {
+      image: '',
+    }
     this.articleService.getArticle().subscribe((res: any) => {
       this.totalItems = res['articles'].length
       this.slugArticle = res['articles'];      
@@ -45,15 +50,26 @@ export class HomeComponent implements OnInit {
         JSON.stringify(e).replace( /\W/g, '').length
       )
     })
-
-    this.articleService.getArticleLimit(10).subscribe((res:any) => {      
-      res['articles'].forEach(ele => {
-        this.recommendedUser.push(ele.author)
-      })
+    
+    this.userService.getUser().subscribe((res:any) => {
+      this.currentUser = res['user']
+      this.articleService.getArticleByAuthor(this.currentUser.username)
+      .subscribe((res: any) => {
+        this.userArticle = res['articles']
+        
+      });
     })
   }
 
+  getPageTagArticles(page) {
+    this.articles = this.tagArticle.slice(page*5, page*5+5)
+  }
+
   getPageArticles(page) {
+      if (this.selectedTab == 'My Feed') {
+        this.articles = this.userArticle.slice(page*5, page*5+5)
+        return
+      }
       this.articles = this.slugArticle.slice(page*5, page*5+5)
     }
     
@@ -73,15 +89,18 @@ export class HomeComponent implements OnInit {
   }
 
   showTagArticle(e) {
+    this.spinner.show();
     this.articleService.getArticleByTag(e).subscribe(res => {
       this.tagArticle = res['articles']
-      this.articles = this.tagArticle;
+      // this.articles = this.tagArticle;
+      this.getPageTagArticles(0)
       this.selectedChip = e;
       this.selectedTab = `#${e}`;
       if (this.headingTab.length > 2) {
         this.headingTab.pop();
       }
       this.headingTab.push(`#${e}`);
+      this.spinner.hide();
     });
   }
 
@@ -101,7 +120,6 @@ export class HomeComponent implements OnInit {
       });
       return;
     }
-    console.log(1);
     this.articleService.removeFavoriteArticle(article.slug).subscribe((res) => {
       this.articles.map((ele) => {
         if (ele.slug == article.slug) {
@@ -112,23 +130,28 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  // removeFavorite(article) {
-  //   this.articleService.removeFavoriteArticle(article.slug).subscribe(res => {
-  //     // console.log(res);
-  //     this.isFavorited = false;
-  //     this.articleService.getArticle().subscribe((res: any) => {
-  //       this.articles = res.articles;
-  //     });
-  //   })
-  // }
-
    selectTab(tab: string) {
+     console.log(tab);
+     
     if (this.selectedTab == tab) return
     this.selectedTab = tab;
     if (tab.includes('#')) {
-      this.articles = this.tagArticle;
+      this.getPageTagArticles(0)
       return
     } 
-    this.articles = this.slugArticle;
+    if (tab == 'My Feed') {
+      this.getPageArticles(0)
+    }
+    this.getPageArticles(0);
+
+  }
+
+  addPost(title: string, description: string, body: string, tagList: []) {
+    this.articleService
+      .creatArticle(title, description, body, tagList)
+      .toPromise()
+      .then((res) => {
+        this.router.navigate(['']);
+      });
   }
 }

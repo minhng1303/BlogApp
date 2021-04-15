@@ -4,6 +4,8 @@ import { ArticleService } from 'src/app/services/ArticleService/article.service'
 import { AuthService } from 'src/app/services/AuthService/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/UserService/user.service';
+import { ModalService } from 'src/app/services/ModalService/modal.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-my-article',
@@ -20,15 +22,19 @@ export class MyArticleComponent implements OnInit {
     private articleService: ArticleService,
     private auth: AuthService,
     private router: Router,
-    private user: UserService
+    private user: UserService,
+    private dialog: ModalService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
+    this.spinner.show();
     this.getImageUrl;
     this.articleService
       .getArticleByAuthor(this.auth.currentUser.username)
       .subscribe((res: any) => {
         this.myArticles = res.articles;
+        this.spinner.hide()
       });
   }
 
@@ -42,5 +48,12 @@ export class MyArticleComponent implements OnInit {
       this.userImage = res['user'].image;
     });
     return this.userImage;
+  }
+
+  showOption() {
+    this.dialog
+      .openOptionDialog()
+      .afterClosed()
+      .subscribe((res) => {});
   }
 }

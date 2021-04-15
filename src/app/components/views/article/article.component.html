@@ -71,14 +71,12 @@
         </span>
       </div>
       <div>
-
         <app-follow-button
           *ngIf="getAuthor !== currentUser.username"
           [slugArticle]="slugArticle"
         ></app-follow-button>
 
         <app-favorite-button
-        
           *ngIf="getAuthor !== currentUser.username"
           [slugArticle]="slugArticle"
         ></app-favorite-button>
@@ -99,78 +97,50 @@
 
     <!-- -----------------------------------------ADD COMMENT SECTION----------------------------------------------------->
     <div class="col-8 mx-auto d-flex align-items-center justify-content-center">
-      <div class="comment-card mt-3 p-3 col-10">
-        <div class="w-100 border-lightdary">
-          <textarea
-            placeholder="Describe yourself here..."
-            class="w-100 h-100 pl-2 py-3 mb-0"
-            [(ngModel)]="newComment"
-          >
-          </textarea>
-        </div>
-        <div
-          class="w-100 bg-lightdary mt-0 p-3 px-4 d-flex justify-content-between"
-        >
-          <div>
-            <img
-              src="{{ getImage }}"
-              style="height: 18px; width: 18px"
-              class="rounded-circle"
-            />
-            <small class="text-danger" *ngIf="errorMessage.length > 1">
-              {{ errorMessage }}
-            </small>
-          </div>
-          <div>
-            <button (click)="addComment()" class="btn btn-success p-2">
-              Post Comment
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- ----------------------------------------------COMMENT SECTION------------------------------------------------ -->
-    <div
-      *ngIf="authService.isAuthenticated"
-      class="col-8 mx-auto d-flex align-items-center justify-content-center flex-wrap"
-    >
+      <div class="comment-card mt-3 p-3 col-10"></div>
+      <!-- ----------------------------------------------COMMENT SECTION------------------------------------------------ -->
       <div
-        *ngFor="let comment of slugComment"
-        class="comment-card mt-3 py-3 col-10"
+        *ngIf="authService.isAuthenticated"
+        class="col-8 mx-auto d-flex align-items-center justify-content-center flex-wrap"
       >
-        <div class="w-100 border-lightdary">
-          <textarea class="w-100 h-100 pl-2 py-3 mb-0">{{
-            comment.body
-          }}</textarea>
-        </div>
         <div
-          class="w-100 bg-lightdary mt-0 p-3 px-4 d-flex align-items-baseline justify-content-between"
+          *ngFor="let comment of slugComment"
+          class="comment-card mt-3 py-3 col-10"
         >
-          <div class="card-comment">
-            <img
-              src="{{ getImage }}"
-              style="height: 18px; width: 18px"
-              class="rounded-circle"
-            />
-            <span class="text-success">
-              {{ comment.author.username }}
-            </span>
-            <small class="text-secondary">
-              {{ comment.createdAt | date: "MMMM d, y" }}
-            </small>
+          <div class="w-100 border-lightdary">
+            <textarea class="w-100 h-100 pl-2 py-3 mb-0">{{
+              comment.body
+            }}</textarea>
           </div>
-          <div>
-            <button
-              *ngIf="isAuthor(comment)"
-              (click)="deleteComment(comment)"
-              class="btn btn-success p-2"
-            >
-              Delete
-            </button>
+          <div
+            class="w-100 bg-lightdary mt-0 p-3 px-4 d-flex align-items-baseline justify-content-between"
+          >
+            <div class="card-comment">
+              <img
+                src="{{ getImage }}"
+                style="height: 18px; width: 18px"
+                class="rounded-circle"
+              />
+              <span class="text-success">
+                {{ comment.author.username }}
+              </span>
+              <small class="text-secondary">
+                {{ comment.createdAt | date: "MMMM d, y" }}
+              </small>
+            </div>
+            <div>
+              <button
+                *ngIf="isAuthor(comment)"
+                (click)="deleteComment(comment)"
+                class="btn btn-success p-2"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <!-- ------------------------------- -->
     </div>
-    <!-- ------------------------------- -->
   </div>
 </div>
