@@ -2,16 +2,7 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  background: black;
+  background: #000000;
   opacity: 0.8;
   z-index: 99;
-}
-.bg-custom {
-  height: auto;
-  background-image: linear-gradient(
-    to bottom,
-    #1e244f 0%,
-    #121e3d 50%,
-    #000 100%
-  );
 }

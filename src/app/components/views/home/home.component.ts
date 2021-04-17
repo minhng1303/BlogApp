@@ -18,46 +18,49 @@ export class HomeComponent implements OnInit {
   articles: Article[];
   slugArticle: Article[];
   tagArticle: Article[];
-  userArticle: Article[];
-  chipList;
+  followArticle: Article[];
+  chipList = [];
   selectedChip: string = '';
   selectedTab: string = 'Global Feed';
-  isFavorited: boolean = false;
   headingTab: string[] = ['My Feed', 'Global Feed'];
   totalItems: number = 0;
   itemsPerPage: number = 5;
-  tagList=  [];
   recommendedUser = []
-  currentUser: any;
+  currentUser: currentUser = {
+    id: 0,
+    email: '',
+    createdAt: '',
+    updatedAt: '',
+    username: '',
+    bio: '',
+    image: '',
+    token: '',  
+  }
+  selectedPage: number = 0;
   constructor(private articleService: ArticleService, private router: Router, 
-              private authService: AuthService, private userService: UserService,
+              public authService: AuthService, private userService: UserService,
               private spinner: NgxSpinnerService, private dialog: ModalService) {}
 
   ngOnInit(): void {
     this.spinner.show();
-    this.currentUser= {
-      image: '',
-    }
     this.articleService.getArticle().subscribe((res: any) => {
-      this.totalItems = res['articles'].length
-      this.slugArticle = res['articles'];      
+      this.totalItems = res['articlesCount'];
+      this.slugArticle = res['articles'];            
       this.getPageArticles(0);
       this.spinner.hide();
     });
 
+    this.userService.getUser().subscribe(res => {
+      this.currentUser = res['user']
+    })
+
     this.articleService.getTag().subscribe((res: any) => {
           this.chipList = res.tags.filter(e => 
-        JSON.stringify(e).replace( /\W/g, '').length
-      )
-    })
+          JSON.stringify(e).replace( /\W/g, '').length
+      )})
     
-    this.userService.getUser().subscribe((res:any) => {
-      this.currentUser = res['user']
-      this.articleService.getArticleByAuthor(this.currentUser.username)
-      .subscribe((res: any) => {
-        this.userArticle = res['articles']
-        
-      });
+    this.articleService.getFollowedArticle().subscribe(res => {
+      this.followArticle = res['articles']
     })
   }
 
@@ -67,21 +70,36 @@ export class HomeComponent implements OnInit {
 
   getPageArticles(page) {
       if (this.selectedTab == 'My Feed') {
-        this.articles = this.userArticle.slice(page*5, page*5+5)
+        this.articles = this.followArticle.slice(page*5, page*5+5)
         return
       }
       this.articles = this.slugArticle.slice(page*5, page*5+5)
     }
     
-  handlePageChange(page: number) {
-    this.getPageArticles(page);    
+  handlePageChange(page: number) {    
+    if (Math.floor(page/4) !== Math.floor(this.selectedPage/4)) {
+      this.spinner.show()
+      this.articleService.getArticleOffset(Math.floor(page/4*20)).subscribe(res => {
+        this.slugArticle = res['articles']
+        this.getPageArticles(page%4)
+        this.spinner.hide();
+        return
+      })
+    }
+    this.selectedPage = page;
+    
+    if (page%4 == 0 && Math.floor(page/4) !== Math.floor(this.selectedPage/4)) {
+      this.spinner.show()
+      this.articleService.getArticleOffset(page/4*20).subscribe(res => {
+        this.slugArticle = res['articles']
+        this.getPageArticles(page%4)
+        this.spinner.hide();
+        return
+      })
+    }
+    this.getPageArticles(page%4); 
   }
   
-  showOption() {
-    this.dialog.openOptionDialog().afterClosed().subscribe(res => {
-      
-    })
-  }
 
   goToArticle(article) {
     let slug = article.slug;
@@ -92,7 +110,6 @@ export class HomeComponent implements OnInit {
     this.spinner.show();
     this.articleService.getArticleByTag(e).subscribe(res => {
       this.tagArticle = res['articles']
-      // this.articles = this.tagArticle;
       this.getPageTagArticles(0)
       this.selectedChip = e;
       this.selectedTab = `#${e}`;
@@ -104,35 +121,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  addFavorite(article) {
-    if (!this.authService.isAuthenticated) {
-      this.router.navigate(['/', 'login']);
-      return;
-    }
-    if (!article.favorited) {
-      this.articleService.addFavoriteArticle(article.slug).subscribe((res) => {
-        this.articles.map((ele) => {
-          if (ele.slug == article.slug) {
-            article.favorited = true;
-            article.favoritesCount++;
-          }
-        });
-      });
-      return;
-    }
-    this.articleService.removeFavoriteArticle(article.slug).subscribe((res) => {
-      this.articles.map((ele) => {
-        if (ele.slug == article.slug) {
-          article.favorited = false;
-          article.favoritesCount--;
-        }
-      });
-    });
-  }
-
    selectTab(tab: string) {
-     console.log(tab);
-     
     if (this.selectedTab == tab) return
     this.selectedTab = tab;
     if (tab.includes('#')) {
@@ -143,7 +132,6 @@ export class HomeComponent implements OnInit {
       this.getPageArticles(0)
     }
     this.getPageArticles(0);
-
   }
 
   addPost(title: string, description: string, body: string, tagList: []) {

@@ -1,14 +1,16 @@
-<div class="container">
-  <div class="row justify-content-center p-4 mx-auto mt-5 w-75">
+<div class="container =">
+  <div class="row justify-content-center p-5 mx-auto w-75">
     <div class="col-md-10">
       <form
         [formGroup]="loginForm"
         (ngSubmit)="login(loginForm.value.email, loginForm.value.password)"
       >
         <div class="form-hearder text-center w-100 my-4">
-          <h2>Sign In</h2>
+          <h2 class="text-info font-weight-bold">Sign In</h2>
           <span>
-            <a class="text-success" routerLink="../signup">Need an account?</a>
+            <a class="text-secondary" routerLink="../signup"
+              >Need an account?</a
+            >
           </span>
         </div>
 
@@ -62,7 +64,7 @@
         <div class="form-group p-2 text-center">
           <button
             type="submit"
-            class="btn btn-success py-2 px-3"
+            class="btn submitButton py-3 px-4"
             [disabled]="!loginForm.valid"
             [class.disabled]="!loginForm.valid"
           >

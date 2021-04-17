@@ -38,7 +38,7 @@ export class PaginationComponent implements OnInit {
       } else if (this.totalPages === 4) {
         this.pages = [0, 1, 2, 3];
       } else {
-        this.pages = [0, 1, 2, 3, 4];
+        this.pages = [0, 1, 2, 3, 4, '...' ,this.totalPages-2, this.totalPages-1];
       }
     } else {
       this.pages = [];
@@ -47,27 +47,37 @@ export class PaginationComponent implements OnInit {
 
   goToPage(page: number): void {
     if (page === this.selectedPage) return;
-    this.selectedPage = page;
     this.onPageChange.emit(page);
-    if (page === this.pages[this.pages.length - 1]) this.next();
-    if (page === this.pages[this.pages.length - 3]) this.previous();
+    this.selectedPage = page;
+    if (page === this.pages[4]) this.next();
+    if (page === this.pages[0]) this.previous();
   }
 
   next(): void {
     if (!this.disableNextButton())
-      this.pages = this.pages.map((page) => page + 1);
+      this.pages = this.pages.map((page) => {
+        if (this.pages.indexOf(page)<5) {
+          return page+1;
+        }
+        return page
+      });
   }
-
+  
   disableNextButton(): boolean {
     return (
       this.pages.length === 0 ||
-      this.pages[this.pages.length - 1] >= this.totalPages - 1
+      this.selectedPage >= this.totalPages - 1
     );
   }
 
   previous(): void {
     if (this.pages[0] > 0) {
-      this.pages = this.pages.map((page) => page - 1);
+      this.pages = this.pages.map((page) => { 
+        if (this.pages.indexOf(page)<5) {
+          return page-1;
+        }
+        return page;
+      });
     }
   }
 

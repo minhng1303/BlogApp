@@ -11,17 +11,33 @@ import { MyProfileComponent } from './components/views/my-profile/my-profile.com
 import { MyArticleComponent } from './components/views/my-profile/my-article/my-article.component';
 import { FavoritedArticleComponent } from './components/views/my-profile/favorited-article/favorited-article.component';
 import { AboutUsComponent } from './components/views/about-us/about-us.component';
+import { NotFoundComponent } from './components/views/not-found/not-found.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-    canActivate: [AuthGuard],
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuard],
+    children: [
+      // {
+      //   path: '',
+      //   redirectTo: 'global',
+      //   pathMatch: 'full'
+      // },
+      // {
+      // path: 'global',
+      // component: ,
+      // },
+      // {
+      // path: 'my-feed',
+      // component: ,
+      // canActivate: [AuthGuard]
+      // }
+    ]
   },
   {
     path: 'article/:slug',
@@ -36,7 +52,6 @@ const routes: Routes = [
   {
     path: 'about-us',
     component: AboutUsComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'new-article',
@@ -73,6 +88,10 @@ const routes: Routes = [
     path: 'signup',
     component: SignUpComponent,
   },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({

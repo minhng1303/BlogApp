@@ -111,12 +111,10 @@ export class ArticleComponent implements OnInit {
       this.articleService
         .addCommentArticle(this.slug, this.newComment)
         .subscribe((res) => {
-          // console.log('successfully');
           this.articleService
             .getCommentArticle(this.slug)
             .subscribe((res: Comment[]) => {
               this.slugComment = res['comments'];
-              console.log(res);
             });
         });
     } else this.errorMessage = 'Comment cannot be blank';

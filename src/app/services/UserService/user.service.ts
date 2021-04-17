@@ -11,26 +11,27 @@ export class UserService {
   constructor(private http: HttpClient,
               private auth: AuthService) {}
 
-              getProfile(val) {
-                return this.http.get(
-                  `https://conduit.productionready.io/api/profiles/${val}`
-                );
-              }
+  getProfile(val) {
+    return this.http.get(
+      `${this.baseURL}profiles/${val}`
+    );
+  }
               
   getUser() {
-    return this.http.get(this.baseURL + `user`);
+    return this.http.get(`${this.baseURL}user`);
   }
 
   followUser(username) {
-    return this.http.post(this.baseURL + `profiles/${username}/follow`, {});
+    return this.http.post(`${this.baseURL}profiles/${username}/follow`, {});
   }
 
   unFollowUser(username) {
-    return this.http.delete(this.baseURL + `profiles/${username}/follow`);
+    return this.http.delete(`${this.baseURL}profiles/${username}/follow`);
   }
 
+ 
   updateUser(bio, image, username) {
-    return this.http.put(this.baseURL + 'user', {
+    return this.http.put(`${this.baseURL}user`, {
       user: {
         bio: bio,
         image: image,

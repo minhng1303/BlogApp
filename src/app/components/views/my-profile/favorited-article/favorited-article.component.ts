@@ -41,10 +41,9 @@ export class FavoritedArticleComponent implements OnInit {
     });
     return this.userImage;
   }
-
-  goToArticle(favoritedArticle) {
-    let slug = favoritedArticle.slug;
-
+  
+  goToArticle(article) {
+    let slug = article.slug;
     this.router.navigate([`article/${slug}`]);
   }
 }

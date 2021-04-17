@@ -36,9 +36,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('user', JSON.stringify(currentUser))
       this.auth.isAuthenticated;
       this.router.navigate(['']);
-      console.log(data);
     }).catch(err => { 
-      console.log(err);
       this.messageError = "Email or password " + err.error.errors["email or password"][0];
     })
   }

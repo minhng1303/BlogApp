@@ -29,7 +29,7 @@ export class MyArticleComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.getImageUrl;
+    this.getImageUrl;    
     this.articleService
       .getArticleByAuthor(this.auth.currentUser.username)
       .subscribe((res: any) => {

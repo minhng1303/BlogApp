@@ -5,21 +5,29 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ArticleService {
-  constructor(private http: HttpClient) {}
+  baseUrl: string = 'https://conduit.productionready.io/api/'
 
+  constructor(private http: HttpClient) {}
+  
   getArticle() {
-    return this.http.get('https://conduit.productionready.io/api/articles');
+    return this.http.get(`${this.baseUrl}articles`);
   }
 
   getSlugArticle(slug) {
     return this.http.get(
-      `https://conduit.productionready.io/api/articles/${slug}`
+      `${this.baseUrl}articles/${slug}`
+    );
+  }
+
+  getFollowedArticle() {
+    return this.http.get(
+      `${this.baseUrl}articles/feed`
     );
   }
 
   getArticleByTag(tag: string) {
     return this.http.get(
-      'https://conduit.productionready.io/api/articles?tag=' + tag
+      `${this.baseUrl}articles?tag=${tag}`
     );
   }
 
@@ -37,25 +45,25 @@ export class ArticleService {
 
   getArticleOffset(offset:number) {
     return this.http.get(
-      'https://conduit.productionready.io/api/articles?offset=' + offset
+      `${this.baseUrl}articles?offset=${offset}`
     );
   } 
 
   getArticleLimit(limit :number) {
     return this.http.get(
-      'https://conduit.productionready.io/api/articles?limit=' + limit
+      `${this.baseUrl}articles?limit=${limit}`
     );
   } 
 
   getCommentArticle(slug) {
     return this.http.get(
-      'https://conduit.productionready.io/api/articles/' + slug + '/comments'
+      `${this.baseUrl}articles/${slug}/comments`
     );
   }
 
   addCommentArticle(slug, body: string) {
     return this.http.post(
-      'https://conduit.productionready.io/api/articles/' + slug + '/comments',
+      `${this.baseUrl}articles/${slug}/comments`,
       {
         comment: {
           body: body,
@@ -70,13 +78,9 @@ export class ArticleService {
     );
   }
 
-  creatArticle(
-    title: string,
-    description: string,
-    body: string,
-    tagList: Array<string>
-  ) {
-    return this.http.post('https://conduit.productionready.io/api/articles', {
+  creatArticle(title: string,description: string,body: string,tagList: Array<string>) {
+    return this.http.post(`${this.baseUrl}articles`, 
+    {
       title: title,
       description: description,
       body: body,
@@ -84,9 +88,9 @@ export class ArticleService {
     });
   }
 
-  updateArticle(title: string, description: string, body: string) {
+  updateArticle(title: string, description: string, body: string, slug: string) {
     return this.http.put(
-      'https://conduit.productionready.io/api/articles/:slug',
+      `${this.baseUrl}articles/${slug}`,
       {
         article: {
           title: title,
@@ -118,7 +122,7 @@ export class ArticleService {
   }
 
   getTag() {
-    return this.http.get('https://conduit.productionready.io/api/tags');
+    return this.http.get(`${this.baseUrl}tags`);
   }
 
 }

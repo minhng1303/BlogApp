@@ -8,19 +8,17 @@ import { UserService } from 'src/app/services/UserService/user.service';
   styleUrls: ['./recommender.component.scss']
 })
 export class RecommenderComponent implements OnInit {
-  @Input('recommendedUser') recommendedUser;
+  recommendedUser = [];
   feedUser = [];
   constructor(private userService: UserService, private articleService: ArticleService) { }
 
   ngOnInit(): void {
     this.articleService.getArticleLimit(10).subscribe((res:any) => { 
       res['articles'].forEach(ele => {
-        this.recommendedUser.push(ele.author)       
+          this.recommendedUser.push(ele.author)
       })        
     })
   }
-
-
 
   followUser(user) {
     this.userService.followUser(user.username).subscribe(res => {

@@ -1,4 +1,7 @@
-<mat-chip-list class="d-flex bg-lightgrey rounded p-3 tag-pill" #chipList>
+<mat-chip-list
+  class="d-flex bg-lightgrey rounded p-3 tag-pill shadow"
+  #chipList
+>
   <mat-chip
     *ngFor="let tag of tagList"
     (click)="showTagByArticle(tag)"

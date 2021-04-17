@@ -18,7 +18,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) { }
 
   createUser(username: string,email: string, password: string) {
-    return this.http.post(this.baseUrl + 'users', {
+    return this.http.post(`${this.baseUrl}users`, {
       user: {
         username: username,
         email: email,
@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post(this.baseUrl + 'users/login', {
+    return this.http.post(`${this.baseUrl}users/login`, {
       user: {
         email: email,
         password: password

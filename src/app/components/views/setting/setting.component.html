@@ -1,49 +1,63 @@
-<div class="container">
-  <div class="col-md-6 mx-auto py-5 col-sm-12">
-    <h2 class="text-center mb-3 text-light">Your Settings</h2>
+<div class="container mb-4">
+  <div class="col-6 mx-auto my-4 py-4 px-4 shadow border rounded bg-light">
+    <h2 class="text-center mb-3 text-dark">Account Profile</h2>
     <form [formGroup]="settingForm" (ngSubmit)="saveSetting()">
-      <div>
+      <div class="formSetting">
         <div class="form-group">
-          <input
-            class="form-control"
-            type="text"
-            placeholder="URL of profile picture"
-            formControlName="image"
-          />
+          <label> URL of profile picture</label>
+          <input class="form-control" type="text" formControlName="image" />
         </div>
         <div class="form-group">
+          <label>Your Name</label>
           <input
             class="form-control form-control-lg"
             type="text"
-            placeholder="Your Name"
             formControlName="username"
+            (keyup)="onKeyUp()"
           />
+          <div class="text-danger" *ngIf="get('username').invalid">
+            <small *ngIf="get('username').errors.required">
+              Your name can't be empty</small
+            >
+          </div>
+          <div class="text-danger" *ngIf="usernameError.length > 1">
+            <small>
+              {{ settingForm.value.username }} {{ usernameError }}
+            </small>
+          </div>
         </div>
+
         <div class="form-group">
+          <label>Short bio about you</label>
           <textarea
             class="form-control form-control-lg"
-            rows="8"
-            placeholder="Short bio about you"
+            rows="3"
             formControlName="bio"
           ></textarea>
         </div>
         <div class="form-group">
+          <label>Your Account Email</label>
           <input
             class="form-control form-control-lg"
             type="text"
-            placeholder="Email"
             formControlName="email"
           />
         </div>
-        <div class="form-group">
-          <input
-            class="form-control form-control-lg"
-            type="password"
-            placeholder="Password"
-            formControlName="password"
-          />
+        <div class="d-flex justify-content-end">
+          <div>
+            <button class="btn cancelBtn" (click)="cancel()">Cancel</button>
+          </div>
+          <div>
+            <button
+              class="btn btn-info editBtn"
+              [disabled]="!settingForm.valid"
+              [class.disabled]="!settingForm.valid"
+              type="submit"
+            >
+              Save Profile
+            </button>
+          </div>
         </div>
-        <button class="btn btn-success" type="submit">Update Settings</button>
       </div>
     </form>
   </div>

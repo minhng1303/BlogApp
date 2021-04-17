@@ -36,6 +36,17 @@ textarea {
   background-color: lightcoral;
 }
 
-.article-container {
-  height: 100vh;
+.bg-custom {
+  background-color: #a56acc;
+  color: white;
+}
+
+.arrow-left:before {
+  content: "";
+  border: 30px solid transparent;
+  border-bottom-color: #fff;
+  position: absolute;
+  left: -45px;
+  top: 1px;
+  transform: rotate(-90deg);
 }

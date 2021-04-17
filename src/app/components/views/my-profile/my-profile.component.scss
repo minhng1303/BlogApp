@@ -4,13 +4,14 @@
   border-radius: 50%;
   border: 3px solid cyan;
 }
+
 a {
   cursor: pointer;
 }
 
 a.active {
-  color: #833ab4 !important;
-  border-bottom: 1px solid rgb(153, 50, 204) !important;
+  color: #5ba7be !important;
+  border-bottom: 1px solid #5ba7be !important;
 }
 
 .profile-container {
@@ -24,14 +25,14 @@ a.active {
     #e1306c,
     #fd1d1d
   );
+}
 
-  .userinfo {
-    div {
+.userinfo {
+  div {
+    color: white;
+    margin-bottom: 20px;
+    button {
       color: white;
-      margin-bottom: 20px;
-      button {
-        color: white;
-      }
     }
   }
 }
@@ -41,5 +42,11 @@ a.active {
     .active {
       border-bottom: 1px solid black;
     }
+  }
+}
+
+div {
+  ul {
+    list-style: none;
   }
 }

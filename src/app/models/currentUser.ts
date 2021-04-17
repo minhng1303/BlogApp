@@ -1,13 +1,11 @@
 export interface currentUser {
-    user: {
         id: number;
         email: string;
         createdAt: string;
         updatedAt: string;
         username: string;
-        bio?: any;
-        image?: any;
+        bio?: string;
+        image?: string;
         token: string;
-    }
   }
   

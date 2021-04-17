@@ -1,5 +1,5 @@
 <button
-  class="btn text-success border border-success py-1 px-2"
+  class="btn text-info border border-info py-1 px-2"
   [class.isFavorited]="isFavorited == true"
   [class.isNotFavorited]="isFavorited == false"
 >
@@ -10,7 +10,7 @@
       height="16"
       fill="currentColor"
       class="bi bi-heart-fill text-light"
-      [class.text-success]="isFavorited == false"
+      [class.text-info]="isFavorited == false"
       [class.text-light]="isFavorited == true"
       viewBox="0 0 16 16"
     >

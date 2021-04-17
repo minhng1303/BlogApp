@@ -26,7 +26,9 @@ export class FollowButtonComponent implements OnInit {
       this.router.navigate(['/', 'login']);
       return;
     }
+    
     this.userService.followUser(this.getAuthor).subscribe((res) => {
+      this.isFollowed = true;
       this.slugArticle.author.following = true;
     });
   }
@@ -37,6 +39,7 @@ export class FollowButtonComponent implements OnInit {
       return;
     }
     this.userService.unFollowUser(this.getAuthor).subscribe((res) => {
+      this.isFollowed = false;
       this.slugArticle.author.following = false;
     });
   }

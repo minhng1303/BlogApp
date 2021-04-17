@@ -1,26 +1,17 @@
-<div class="article-container">
-  <div class="row w-100 mb-3">
+<div class="article-page border-top">
+  <div class="d-flex justify-content-center w-100 flex-wrap">
     <!-- ------------------------------------HEADER------------------------------------------------------->
     <div class="col-12 text-light bg-dark d-flex flex-column p-3">
       <h1 class="display-4 col-8 mx-auto">
         <strong>{{ getTitle }}</strong>
       </h1>
       <div class="col-8 mx-auto d-flex align-items-center">
-        <span>
-          <img
-            src="{{ getImage }}"
-            style="height: 36px; width: 36px"
-            class="rounded-circle"
-          />
-        </span>
-        <div class="d-flex w-15 flex-wrap font-small">
-          <span class="col-md-12 pl-1">
-            {{ getAuthor }}
-          </span>
-          <span class="col-md-12 pl-1">
-            {{ getCreatedTime | date: "MMMM d, y" }}
-          </span>
-        </div>
+        <app-article-header
+          [article]="slugArticle"
+          [showDot]="false"
+          [textlight]="true"
+        >
+        </app-article-header>
         <div>
           <app-follow-button
             *ngIf="getAuthor !== currentUser.username"
@@ -51,68 +42,70 @@
     <!-- ------------------------------------ARTICLE BODY------------------------------------------------------->
 
     <div class="mx-auto col-12">
-      <div class="col-8 mx-auto">
-        <p class="mt-5 mb-10 text-light">
+      <div class="col-8 mx-auto border-bottom">
+        <p class="mt-5 mb-10 text-dark">
           {{ getBody }}
         </p>
-        <hr />
       </div>
     </div>
     <hr />
 
-    <!-- ------------------------------------ARTICLE BODY------------------------------------------------------->
-    <!-- <div class="col-8 mx-auto d-flex align-items-center justify-content-center">
-      <div class="d-flex w-15 flex-wrap font-small">
-        <span class="col-md-12 pl-1 text-success">
-          <a>{{ getAuthor }}</a>
-        </span>
-        <span class="col-md-12 pl-1 text-secondary">
-          <a> {{ getCreatedTime | date: "MMMM d, y" }} </a>
-        </span>
+    <!-- -----------------------------------------ADD COMMENT SECTION------------------------------------------->
+    <div
+      class="col-8 mx-auto d-flex align-items-center justify-content-center pb-5 mt-3 flex-wrap"
+    >
+      <div
+        class="comment-card rounded shadow-lg mx-auto d-flex flex-wrap justify-content-center mt-3 p-0 col-10"
+      >
+        <div class="col-12 h-100 input-group px-0">
+          <input
+            type="text"
+            class="form-control py-1"
+            placeholder="Leave a comment"
+            [(ngModel)]="newComment"
+          />
+          <div class="input-group-append">
+            <span
+              class="input-group-text bg-info text-light py-1 px-2"
+              (click)="addComment()"
+              >Post</span
+            >
+          </div>
+        </div>
+        <small class="text-danger col-12 mt-1" *ngIf="errorMessage.length > 1">
+          {{ errorMessage }}
+        </small>
       </div>
-      <div>
-        <app-follow-button
-          *ngIf="getAuthor !== currentUser.username"
-          [slugArticle]="slugArticle"
-        ></app-follow-button>
-
-        <app-favorite-button
-          *ngIf="getAuthor !== currentUser.username"
-          [slugArticle]="slugArticle"
-        ></app-favorite-button>
-
-        <app-edit-button
-          *ngIf="getAuthor == currentUser.username"
-          [slugArticle]="slugArticle"
-        >
-        </app-edit-button>
-
-        <app-delete-button
-          *ngIf="getAuthor == currentUser.username"
-          [slugArticle]="slugArticle"
-        >
-        </app-delete-button>
-      </div>
-    </div> -->
-
-    <!-- -----------------------------------------ADD COMMENT SECTION----------------------------------------------------->
-    <div class="col-8 mx-auto d-flex align-items-center justify-content-center">
-      <div class="comment-card mt-3 p-3 col-10"></div>
       <!-- ----------------------------------------------COMMENT SECTION------------------------------------------------ -->
       <div
         *ngIf="authService.isAuthenticated"
-        class="col-8 mx-auto d-flex align-items-center justify-content-center flex-wrap"
+        class="col-12 rounded mx-auto d-flex align-items-center justify-content-center flex-wrap"
       >
         <div
           *ngFor="let comment of slugComment"
-          class="comment-card mt-3 py-3 col-10"
+          class="comment-card mt-3 col-10 p-0"
         >
-          <div class="w-100 border-lightdary">
-            <textarea class="w-100 h-100 pl-2 py-3 mb-0">{{
-              comment.body
-            }}</textarea>
+          <div class="w-100 d-flex">
+            <img
+              src="{{ comment.author.image }}"
+              style="height: 45px; width: 45px"
+              class="rounded-circle align-self-center mx-auto"
+            />
+            <div
+              class="bg-white col-11 shadow rounded px-3 py-2 flex-grow-1 text-wrap arrow-left ml-3"
+            >
+              <span class="text-success">
+                {{ comment.author.username }}
+              </span>
+              <small class="text-secondary">
+                {{ comment.createdAt | date: "h:mm a - MMMM d, y" }}
+              </small>
+              <div>
+                {{ comment.body }}
+              </div>
+            </div>
           </div>
-          <div
+          <!-- <div
             class="w-100 bg-lightdary mt-0 p-3 px-4 d-flex align-items-baseline justify-content-between"
           >
             <div class="card-comment">
@@ -137,7 +130,7 @@
                 Delete
               </button>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <!-- ------------------------------- -->

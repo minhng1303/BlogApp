@@ -16,4 +16,53 @@ body {
   padding: 0px !important;
 }
 
+.cancelButton {
+  background-color: transparent;
+  border: 0px;
+  border-radius: 500px;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 1em 3em;
+}
+
+.submitButton {
+  border-radius: 100px;
+  min-height: 48px;
+  letter-spacing: 1px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 20px;
+  padding: 2em 3em;
+  cursor: pointer;
+  background-color: #5ba7be;
+  color: white;
+}
+
+.submitButton:hover {
+  background-color: #518b9c;
+  color: white;
+}
+
+a {
+  cursor: pointer;
+}
+
+.bg-insta {
+  background: linear-gradient(
+    45deg,
+    #405de6,
+    #5851db,
+    #833ab4,
+    #c13584,
+    #e1306c,
+    #fd1d1d
+  );
+}
 // -----------------------------------

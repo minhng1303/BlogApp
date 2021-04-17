@@ -1,80 +1,85 @@
-<nav class="container-fluid navbar navbar-expand-lg navbar-light bg-dark py-3">
+<nav
+  class="container-fluid navbar navbar-expand-lg navbar-light border bg-light py-3"
+>
   <div class="row w-75 mx-auto align-items-center py-0">
-    <a class="navbar-brand col-5 mr-0 text-light" routerLink="home">Unigram</a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto d-flex align-items-baseline">
-        <li class="nav-item mx-1"></li>
-        <li class="nav-item" *ngIf="auth.isLogged">
-          <a
-            class="nav-link text-light font-weight-bold mx-1"
-            routerLinkActive="active"
-            routerLink="new-article"
+    <h3
+      class="col-5 m-0 text-secondary py-0"
+      routerLink="home"
+      style="cursor: pointer; outline: none"
+    >
+      Unigram
+    </h3>
+    <ul class="navbar-nav ml-auto d-flex align-items-center">
+      <li class="nav-item" *ngIf="auth.isLogged">
+        <a
+          class="nav-link text-secondary font-weight-bold mx-1"
+          routerLink="new-article"
+          routerLinkActive="active-nav"
+        >
+          <span> New Post</span></a
+        >
+      </li>
+      <li class="nav-item" *ngIf="auth.isLogged">
+        <a
+          class="nav-link text-secondary font-weight-bold mx-1"
+          routerLink="setting"
+          routerLinkActive="active-nav"
+          ><span> Setting </span></a
+        >
+      </li>
+      <li class="nav-item" *ngIf="!auth.isLogged">
+        <a
+          class="nav-link text-secondary font-weight-bold mx-1"
+          routerLinkActive="active"
+          routerLink="login"
+          >Sign In</a
+        >
+      </li>
+      <li class="nav-item" *ngIf="!auth.isLogged">
+        <a
+          class="nav-link text-secondary link-item font-weight-bold mx-1"
+          routerLinkActive="active"
+          routerLink="signup"
+          >Sign Up</a
+        >
+      </li>
+      <li class="nav=item text-secondary mx-1">|</li>
+      <li class="nav-item" *ngIf="auth.isLogged">
+        <div
+          class="d-flex justify-content-center align-items-center dropdown dropdown-toggle"
+          (click)="showDropdown = !showDropdown"
+          (blur)="showDropdown = false"
+        >
+          <button
+            class="d-flex justify-content-center align-items-center btn p-0"
+            type="button"
           >
-            <span> New Post</span></a
-          >
-        </li>
-        <li class="nav-item" *ngIf="auth.isLogged">
-          <a
-            class="nav-link text-light font-weight-bold mx-1"
-            routerLinkActive="active"
-            routerLink="setting"
-            ><span> Setting </span></a
-          >
-        </li>
-        <li class="nav-item" *ngIf="!auth.isLogged">
-          <a
-            class="nav-link text-light font-weight-bold mx-1"
-            routerLinkActive="active"
-            routerLink="login"
-            >Sign In</a
-          >
-        </li>
-        <li class="nav-item" *ngIf="!auth.isLogged">
-          <a
-            class="nav-link text-light link-item font-weight-bold mx-1"
-            routerLinkActive="active"
-            routerLink="signup"
-            >Sign Up</a
-          >
-        </li>
-        <li class="nav=item text-light mx-1">|</li>
-        <li class="nav-item" *ngIf="auth.isLogged">
+            <a class="nav-link text-secondary font-weight-bold mx-1">
+              {{ getUserName }}
+            </a>
+          </button>
           <div
-            class="d-flex justify-content-center align-items-center dropdown dropdown-toggle"
-            (click)="showDropdown = !showDropdown"
-            (blur)="showDropdown = false"
+            class="dropdown-menu dropdown-menu-right"
+            [class.show]="showDropdown"
           >
-            <button
-              class="d-flex justify-content-center align-items-center btn p-0"
-              type="button"
-            >
-              <a class="nav-link text-light font-weight-bold mx-1">
-                {{ getUserName }}
-              </a>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-right"
-              [class.show]="showDropdown"
-            >
-              <div class="dropdown-item">
-                <a
-                  class="nav-link link-item mx-1 font-weight-bold"
-                  routerLink="profile"
-                  routerLinkActive="active"
-                  >My Profile</a
-                >
-              </div>
-              <div class="dropdown-item" (click)="logOut()">
-                <a
-                  class="nav-link link-item mx-1 font-weight-bold"
-                  *ngIf="auth.isLogged"
-                  >Sign Out</a
-                >
-              </div>
+            <div class="dropdown-item">
+              <a
+                class="nav-link link-item mx-1 font-weight-bold"
+                routerLink="profile"
+                routerLinkActive="active"
+                >My Profile</a
+              >
+            </div>
+            <div class="dropdown-item" (click)="logOut()">
+              <a
+                class="nav-link link-item mx-1 font-weight-bold"
+                *ngIf="auth.isLogged"
+                >Sign Out</a
+              >
             </div>
           </div>
-        </li>
-      </ul>
-    </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </nav>

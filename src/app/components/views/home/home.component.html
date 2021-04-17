@@ -1,19 +1,12 @@
-<div class="w-100 p-0">
-  <div class="row w-100 mx-0 mb-1">
-    <div class="col-12 text-center text-light bg-insta d-flex flex-column py-4">
-      <h1 class="display-4"><strong>Unigram</strong></h1>
-      <p class="mb-2">A place to share your emotions and feelings.</p>
-    </div>
-  </div>
-
-  <div class="container">
+<div class="home-page w-100 p-0">
+  <div class="container mt-3">
     <div class="row">
       <div class="col-8">
         <!-----------------TAB------------------->
-        <ul class="nav nav-tabs mb-5">
+        <ul class="nav nav-tabs mb-4">
           <li class="nav-item" *ngFor="let tab of headingTab">
             <a
-              class="nav-link text-light"
+              class="nav-link text-secondary font-weight-bold"
               (click)="selectTab(tab)"
               [class.active-tab]="selectedTab == tab"
               >{{ tab }}</a
@@ -21,7 +14,10 @@
           </li>
         </ul>
         <!-- -------------NEW POST-------------->
-        <div class="w-100 border bg-light rounded shadow-md mb-3">
+        <div
+          class="w-100 border bg-light rounded shadow mb-4"
+          *ngIf="authService.isAuthenticated"
+        >
           <div class="d-flex align-items-center px-3">
             <img
               src="{{ currentUser.image }}"
@@ -41,7 +37,8 @@
               <span
                 (click)="addPost('a', 'b', 'c', ['d'])"
                 class="badge badge-info text-light border border-info font-weight-bold p-2"
-                >Post
+              >
+                <a>Post</a>
               </span>
             </div>
           </div>
@@ -49,75 +46,52 @@
 
         <!-- -------------BLOG CARD------------->
         <div
-          class="card mb-4 w-100 p-2"
+          class="card shadow-lg mb-4 w-100 p-2"
           style="width: 18rem"
           *ngFor="let article of articles"
         >
-          <div class="d-flex align-items-center px-0">
-            <img
-              src="https://static.productionready.io/images/smiley-cyrus.jpg"
-              class="card-img-top rounded-circle m-1 img"
-              alt="..."
-              style="width: 28px; height: 28px"
-            />
-            <div class="d-flex flex-wrap ml-1">
-              <span class="pl-0 col-12" (click)="goToArticle(article)">
-                <a class="text-dark font-weight-bold"
-                  >{{ article.author.username }}
-                </a>
-              </span>
-              <small class="text-secondary"
-                >{{ article.createdAt | date }}
-              </small>
-            </div>
+          <app-article-header [article]="article"> </app-article-header>
 
-            <div class="mt-1 mr-2 ml-auto">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-three-dots"
-                (click)="showOption()"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-                />
-              </svg>
-            </div>
-          </div>
-
-          <div class="card-body pl-3">
+          <div class="card-body pt-2 pb-0 pl-2">
             <hr class="mt-0" />
             <!-- -----CARD BORDY------ -->
-            <div class="card-body border-bottom">
-              <h5 (click)="goToArticle(article)">
-                <a> {{ article.title }} </a>
-              </h5>
-              <p (click)="goToArticle(article)">
-                <a>{{ article.body }}</a>
+            <div class="card-body py-2 border-bottom">
+              <h3 class="font-weight-bold">
+                {{ article.title }}
+              </h3>
+              <p>
+                {{ article.body }}
               </p>
-              <small
-                (click)="goToArticle(article)"
-                class="text-secondary btn btn-link p-0"
-              >
-                Read more
+              <small (click)="goToArticle(article)" class="text-secondary">
+                <a>Read more</a>
               </small>
             </div>
             <!-- -----CARD BORDY------ -->
-            <app-like-button
-              [article]="article"
-              [articles]="articles"
-            ></app-like-button>
+            <div class="d-flex justify-content-between col-12 mt-2 px-0">
+              <app-like-button
+                class="col-2"
+                [article]="article"
+                [articles]="articles"
+              ></app-like-button>
+              <div
+                class="d-flex justify-content-end align-items-center flex-wrap"
+              >
+                <span
+                  *ngFor="let tag of article.tagList"
+                  class="badge badge-pill badge-info mx-1 mb-1 ml-auto"
+                >
+                  #{{ tag }}
+                </span>
+              </div>
+            </div>
             <!-- ------ICON BOX-------- -->
-            <div class="col-4">
+            <div class="col-12 d-flex justify-content-between">
               <span> {{ article.favoritesCount }} likes </span>
             </div>
           </div>
         </div>
         <!-- ------SIDE BOX------- -->
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mt-4">
           <app-pagination
             [totalItems]="totalItems"
             [itemsPerPage]="itemsPerPage"
@@ -128,6 +102,7 @@
       <div class="col-4 mt-5">
         <!-- ------APP CHIP---------->
         <app-chips
+          class="shadow-sm"
           [chipList]="chipList"
           (showTagArticle)="showTagArticle($event)"
         ></app-chips>
