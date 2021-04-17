@@ -9,17 +9,13 @@ import { UserService } from 'src/app/services/UserService/user.service';
 })
 export class MyProfileComponent implements OnInit {
   currentUser;
-  userInfo;
   showActiveTab;
   constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
     this.currentUser = '';
-    this.userInfo = {};
-    this.userService.getUser().subscribe((res) => {
-      this.userInfo = res['user'];
-      console.log(this.userInfo);
 
+    this.userService.getUser().subscribe((res) => {
       this.userService
         .getProfile(res['user'].username)
         .subscribe((res: any) => {
@@ -30,6 +26,10 @@ export class MyProfileComponent implements OnInit {
 
   goToSetting() {
     this.router.navigate(['setting']);
+  }
+
+  goToNewPost() {
+    this.router.navigate(['new-article']);
   }
 
   showActive() {

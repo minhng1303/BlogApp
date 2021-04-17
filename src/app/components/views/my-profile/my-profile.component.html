@@ -3,27 +3,26 @@
     class="col-12 py-5 d-flex justify-content-center align-items-center flex-wrap"
   >
     <div class="row">
-      <div class="col-6 text-center">
+      <div class="col-12 text-center">
         <img
-          class="img my-2"
+          class="img my-3"
           src="{{ currentUser.image }}"
           alt=""
           style="width: 180px; height: 180px"
         />
-      </div>
-      <div class="col-6 text-light">
-        <h2>
-          {{ userInfo.username }}
-        </h2>
-        <p>Id: {{ userInfo.id }}</p>
-        <p>Email: {{ userInfo.email }}</p>
-        <p>Account created at: {{ userInfo.createdAt | date }}</p>
+        <h1 class="text-light col-12 text-center">
+          {{ currentUser.username }}
+        </h1>
+        <span class="text-light col-12 text-center">
+          {{ currentUser.bio }}</span
+        >
+        <span></span>
       </div>
     </div>
   </div>
   <!-- --------------------------BODY----------------------------->
 </div>
-<div class="row mx-auto col-10 rounded bg-light py-3">
+<div class="row mx-auto mt-3 col-10 rounded bg-light py-3">
   <ul class="nav w-100 showActiveTab">
     <li class="nav-item">
       <a
@@ -55,7 +54,7 @@
             fill="currentColor"
             class="bi bi-file-plus mx-1"
             viewBox="0 0 16 16"
-            (click)="goToSetting()"
+            (click)="goToNewPost()"
           >
             <path
               d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z"
@@ -95,10 +94,10 @@
 
 <div class="row mx-auto rounded col-10 p-0 mt-4">
   <div class="col-4 rounded p-0">
-    <div class="bg-light rounded p-1">
-      <strong class="pl-3">Introduce:</strong>
+    <div class="bg-light rounded p-1 py-3">
+      <strong class="pl-3 mb-3">Introduce:</strong>
       <ul class="pl-3">
-        <li>
+        <li class="my-1">
           <img
             class="hu5pjgll cwsop09l mr-1"
             src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/id4jdGYPaIP.png"
@@ -108,7 +107,7 @@
           />
           <span> Studied at <strong>Le Quy Don highschool, Hanoi</strong></span>
         </li>
-        <li>
+        <li class="my-1">
           <img
             class="hu5pjgll cwsop09l mr-1"
             src="https://static.xx.fbcdn.net/rsrc.php/v3/yk/r/X_t0JnueVu-.png"
@@ -118,7 +117,7 @@
           />
           <span> Live at <strong> Hanoi </strong></span>
         </li>
-        <li>
+        <li class="my-1">
           <img
             class="hu5pjgll cwsop09l mr-1"
             src="https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/S0aTxIHuoYO.png"
@@ -128,7 +127,7 @@
           />
           <span> Dating</span>
         </li>
-        <li>
+        <li class="my-1">
           <img
             class="hu5pjgll cwsop09l mr-1"
             src="https://static.xx.fbcdn.net/rsrc.php/v3/yv/r/JanwljMyOww.png"
