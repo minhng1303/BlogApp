@@ -8,15 +8,14 @@ import { AuthService } from '../AuthService/auth.service';
 })
 export class UserService {
   baseURL: string = 'https://conduit.productionready.io/api/';
-  constructor(private http: HttpClient,
-              private auth: AuthService) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
-              getProfile(val) {
-                return this.http.get(
-                  `https://conduit.productionready.io/api/profiles/${val}`
-                );
-              }
-              
+  getProfile(val) {
+    return this.http.get(
+      `https://conduit.productionready.io/api/profiles/${val}`
+    );
+  }
+
   getUser() {
     return this.http.get(this.baseURL + `user`);
   }

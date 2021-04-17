@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/UserService/user.service';
 export class SettingComponent implements OnInit {
   settingForm: FormGroup;
   userProfile;
+  usernameError: boolean = false;
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
@@ -36,7 +37,6 @@ export class SettingComponent implements OnInit {
     this.spinner.show();
     this.userService.getUser().subscribe((res) => {
       this.userProfile = res['user'];
-
       this.settingForm = this.fb.group({
         image: [
           { value: this.userProfile.image, disabled: false },
@@ -65,16 +65,23 @@ export class SettingComponent implements OnInit {
   }
 
   saveSetting() {
+    if (this.settingForm.value.username === '') return;
+
     this.userService
       .updateUser(
         this.settingForm.value.bio,
         this.settingForm.value.image,
         this.settingForm.value.username
       )
-      .subscribe((res) => {
-        this.auth.currentUser.username = this.settingForm.value.username;
-        this.router.navigate(['/']);
-      });
+      .subscribe(
+        (res) => {
+          this.auth.currentUser.username = this.settingForm.value.username;
+          this.router.navigate(['/profile']);
+        },
+        (err) => {
+          this.usernameError = true;
+        }
+      );
   }
 
   get(val) {
@@ -83,5 +90,9 @@ export class SettingComponent implements OnInit {
 
   cancel() {
     this.router.navigate(['/setting']);
+  }
+
+  onKeyUp() {
+    this.usernameError = false;
   }
 }
