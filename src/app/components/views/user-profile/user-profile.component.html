@@ -1,0 +1,53 @@
+<div class="profile-page">
+  <div class="profile-container">
+    <div
+      class="col-12 py-5 d-flex justify-content-center align-items-center flex-wrap"
+    >
+      <div class="row">
+        <div class="col-9 text-center" *ngIf="selectedUser">
+          <img
+            class="img my-3"
+            src="{{ selectedUser.image }}"
+            alt=""
+            style="width: 180px; height: 180px"
+          />
+          <h1 class="text-light col-12 text-center">
+            {{ selectedUser.username }}
+          </h1>
+          <span class="text-light col-12 text-center">
+            {{ selectedUser.bio }}</span
+          >
+          <span></span>
+        </div>
+        <div class="col-3">
+          <!-- <app-follow-button
+              *ngIf="getAuthor === selectedUser.username"
+              [slugArticle]="slugArticle"
+            >
+            </app-follow-button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mx-auto shadow border col-10 rounded bg-light py-3 mt-3">
+  <ul class="nav w-100 showActiveTab">
+    <li class="nav-item">
+      <a
+        class="nav-link text-secondary font-weight-bold"
+        routerLink="posted"
+        routerLinkActive="active"
+        >Posted</a
+      >
+    </li>
+    <li class="nav-item h-100 my-0">
+      <a
+        class="nav-link text-secondary font-weight-bold"
+        routerLink="userFav"
+        routerLinkActive="active"
+        >Favorited
+      </a>
+    </li>
+  </ul>
+</div>

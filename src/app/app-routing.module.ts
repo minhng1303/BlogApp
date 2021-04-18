@@ -1,3 +1,5 @@
+import { UserPostComponent } from './components/views/user-profile/user-post/user-post.component';
+import { UserProfileComponent } from './components/views/user-profile/user-profile.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ArticleComponent } from './components/views/article/article.component';
@@ -12,6 +14,7 @@ import { MyArticleComponent } from './components/views/my-profile/my-article/my-
 import { FavoritedArticleComponent } from './components/views/my-profile/favorited-article/favorited-article.component';
 import { AboutUsComponent } from './components/views/about-us/about-us.component';
 import { NotFoundComponent } from './components/views/not-found/not-found.component';
+import { UserFavoritedComponent } from './components/views/user-profile/user-favorited/user-favorited.component';
 
 const routes: Routes = [
   {
@@ -32,6 +35,28 @@ const routes: Routes = [
     path: 'setting',
     component: SettingComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'home/:username',
+    component: UserProfileComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'posted',
+        pathMatch: 'full',
+      },
+      {
+        path: 'posted',
+        component: UserPostComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'userFav',
+        component: UserFavoritedComponent,
+        canActivate: [AuthGuard],
+      },
+    ],
   },
   {
     path: 'about-us',
@@ -79,8 +104,8 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: NotFoundComponent
-  }
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({
