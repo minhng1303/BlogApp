@@ -8,7 +8,7 @@ import { OptionDialogComponent } from 'src/app/components/commons/option-dialog/
 })
 export class ModalService {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) { }
 
   openConfirmDialog(){
    return this.dialog.open(DialogComponent,{

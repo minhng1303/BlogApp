@@ -1,0 +1,11 @@
+<div class="card-body py-2 border-bottom">
+  <h3 class="font-weight-bold">
+    {{ article.title }}
+  </h3>
+  <p>
+    {{ article.body }}
+  </p>
+  <small (click)="goToArticle(article)" class="text-secondary">
+    <a>Read more</a>
+  </small>
+</div>

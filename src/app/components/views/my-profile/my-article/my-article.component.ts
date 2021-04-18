@@ -13,43 +13,74 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./my-article.component.scss'],
 })
 export class MyArticleComponent implements OnInit {
-  mySlugArticle: Article;
-  myArticles: Article;
-  username = this.auth.currentUser.username;
-  userImage = '';
+  myArticle: Article[] = [];  
+  slugArticle: Article[] = [];
+  user: {};
+  selectedPage: number = 0;
+  totalItems: number = 0;
+  itemsPerPage: number = 5;
 
   constructor(
     private articleService: ArticleService,
     private auth: AuthService,
     private router: Router,
-    private user: UserService,
+    private userService: UserService,
     private dialog: ModalService,
     private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
     this.spinner.show();
-    this.getImageUrl;    
+    this.getUser();
     this.articleService
       .getArticleByAuthor(this.auth.currentUser.username)
       .subscribe((res: any) => {
-        this.myArticles = res.articles;
-        this.spinner.hide()
+        this.myArticle = res['articles'];
+        this.slugArticle = res['articles'];
+        this.totalItems = res['articlesCount'];
+        this.getPageArticles(0);        
+        this.spinner.hide();
       });
   }
 
-  goToMyArticle(myArticle) {
-    let mySlugArticle = myArticle.slug;
-    this.router.navigate([`article/${mySlugArticle}`]);
+  getPageArticles(page) {
+    this.myArticle = this.slugArticle.slice(page*5, page*5+5)
+  }
+  
+  handlePageChange(page: number) {        
+    if (Math.floor(page/4) !== Math.floor(this.selectedPage/4)) {
+      this.spinner.show()
+      this.articleService.getArticleOffsetByFav(Math.floor(page/4*20),this.user['username']).subscribe(res => {
+        this.slugArticle = res['articles']
+        this.getPageArticles(page%4)
+        this.spinner.hide();
+        return
+      })
+    }
+    this.selectedPage = page;
+    if (page%4 == 0 && Math.floor(page/4) !== Math.floor(this.selectedPage/4)) {
+      this.spinner.show()
+      this.articleService.getArticleOffsetByFav(Math.floor(page/4*20),this.user['username']).subscribe(res => {
+        this.slugArticle = res['articles']
+        this.getPageArticles(page%4)
+        this.spinner.hide();
+        return
+      })
+    }
+    this.getPageArticles(page%4); 
+  }
+  
+  goToArticle(article) {
+    let slug = article.slug;
+    this.router.navigate([`article/${slug}`]);
   }
 
-  get getImageUrl() {
-    this.user.getUser().subscribe((res: any) => {
-      this.userImage = res['user'].image;
+  getUser() {
+    this.userService.getUser().subscribe((res: any) => {
+      this.user = res['user']      
     });
-    return this.userImage;
   }
-
+  
   showOption() {
     this.dialog
       .openOptionDialog()

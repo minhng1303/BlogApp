@@ -38,7 +38,7 @@ export class PaginationComponent implements OnInit {
       } else if (this.totalPages === 4) {
         this.pages = [0, 1, 2, 3];
       } else {
-        this.pages = [0, 1, 2, 3, 4, '...' ,this.totalPages-2, this.totalPages-1];
+        this.pages = [0, 1, 2, 3, 4];
       }
     } else {
       this.pages = [];

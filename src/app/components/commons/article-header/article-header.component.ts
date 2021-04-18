@@ -14,7 +14,7 @@ export class ArticleHeaderComponent implements OnInit {
   @Input('textlight') textlight: boolean;
   constructor(private router: Router, private dialog: ModalService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
   }
 
   goToArticle(article) {

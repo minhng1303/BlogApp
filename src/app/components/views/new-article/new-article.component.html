@@ -1,6 +1,6 @@
-<div class="container bg-light shadow border text-dark py-4 my-4 w-50">
+<div class="container bg-light shadow border text-dark py-3 my-4 w-50">
   <div class="formSetting">
-    <form [formGroup]="articleForm" (ngSubmit)="creatArticle()">
+    <form [formGroup]="articleForm">
       <div class="form-group">
         <h3 class="text-center">Let's talk</h3>
         <input
@@ -61,24 +61,14 @@
 
       <div class="form-group">
         <div class="input-group w-100 border">
-          <div
-            class="d-flex py-1 px-1 col-11 px-0"
-            style="background-color: white"
-          >
-            <span
-              class="badge badge-info badge-pill col-1 mx-1"
-              *ngFor="let tag of tagList"
-            >
-              #{{ tag }}
-            </span>
-            <input
-              type="text"
-              class="py-2 form-control tagInput"
-              placeholder="Enter tag"
-              formControlName="tagList"
-              #tagInput
-            />
-          </div>
+          <input
+            type="text"
+            class="py-2 form-control tagInput"
+            placeholder="Enter tag"
+            formControlName="tagList"
+            #tagInput
+            (keyup.enter)="addTagbyEnter(tagInput.value, $event)"
+          />
           <div class="input-group-append col-1 px-0">
             <button
               type="button"
@@ -90,18 +80,52 @@
           </div>
         </div>
       </div>
-
+      <!-- ------------LIST OF TAG-------------- -->
+      <div class="d-flex align-items-baseline px-0">
+        <span
+          class="d-flex align-items-center justify-content-between badge badge-info badge-pill px-1 mx-1"
+          *ngFor="let tag of tagList"
+        >
+          <span>#{{ tag }}</span>
+          <span
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              (click)="deleteTag(tag)"
+              fill="currentColor"
+              class="bi bi-x"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+              />
+            </svg>
+          </span>
+        </span>
+      </div>
+      <!-- ----------BUTTON BOX------------>
       <div class="form-group d-flex justify-content-end mt-4">
         <div>
-          <button class="btn cancelBtn" (click)="cancel()">Cancel</button>
+          <button class="btn cancelBtn" (click)="cancel($event)">Cancel</button>
         </div>
         <button
-          type="submit"
-          class="btn btn-success editBtn"
+          *ngIf="editMode == false"
+          (click)="creatArticle($event)"
+          class="btn btn-info editBtn"
           [disabled]="!articleForm.valid"
           [class.disabled]="!articleForm.valid"
         >
           Create
+        </button>
+        <button
+          *ngIf="editMode == true"
+          (click)="editArticle($event)"
+          class="btn btn-info editBtn"
+          [disabled]="!articleForm.valid"
+          [class.disabled]="!articleForm.valid"
+        >
+          Update
         </button>
       </div>
     </form>

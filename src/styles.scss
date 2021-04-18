@@ -11,7 +11,7 @@ body {
   // font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.mat-dialog-container {
+.app-full-bleed-dialog {
   margin: 0px;
   padding: 0px !important;
 }
@@ -28,6 +28,7 @@ body {
   text-align: center;
   text-transform: uppercase;
   padding: 1em 3em;
+  outline: none;
 }
 
 .submitButton {

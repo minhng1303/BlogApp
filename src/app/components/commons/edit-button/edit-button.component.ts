@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-button',
@@ -7,13 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class EditButtonComponent implements OnInit {
   @Input('slugArticle') slugArticle
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   editArticle() {
-    
+    this.router.navigate(['new-article',this.slugArticle.slug]);
   }
 
 }

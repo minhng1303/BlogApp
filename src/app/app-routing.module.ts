@@ -22,27 +22,11 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    children: [
-      // {
-      //   path: '',
-      //   redirectTo: 'global',
-      //   pathMatch: 'full'
-      // },
-      // {
-      // path: 'global',
-      // component: ,
-      // },
-      // {
-      // path: 'my-feed',
-      // component: ,
-      // canActivate: [AuthGuard]
-      // }
-    ]
   },
   {
     path: 'article/:slug',
     component: ArticleComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'setting',
@@ -55,6 +39,11 @@ const routes: Routes = [
   },
   {
     path: 'new-article',
+    component: NewArticleComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'new-article/:slug',
     component: NewArticleComponent,
     canActivate: [AuthGuard],
   },

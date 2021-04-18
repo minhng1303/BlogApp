@@ -35,12 +35,12 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DialogComponent } from './components/commons/dialog/dialog.component';
 import {MatButtonModule} from '@angular/material/button';
 import { OptionDialogComponent } from './components/commons/option-dialog/option-dialog.component';
-import { ParticlesComponent } from './components/commons/particles/particles.component';
 import { AboutUsComponent } from './components/views/about-us/about-us.component';
 import { NewPostIconComponent } from './components/commons/new-post-icon/new-post-icon.component';
 import { NotFoundComponent } from './components/views/not-found/not-found.component';
 import { ArticleHeaderComponent } from './components/commons/article-header/article-header.component';
 import { ParticlesModule } from 'angular-particle';
+import { ArticleBodyComponent } from './components/commons/article-body/article-body.component';
 
 
 
@@ -69,13 +69,13 @@ import { ParticlesModule } from 'angular-particle';
     FavoriteButtonComponent,
     DialogComponent,
     OptionDialogComponent,
-    ParticlesComponent,
     AboutUsComponent,
     NewPostIconComponent,
     NotFoundComponent,
     ArticleHeaderComponent,
+    ArticleBodyComponent,
   ],
-  entryComponents: [DialogComponent, OptionDialogComponent],
+  entryComponents: [OptionDialogComponent, DialogComponent],
   imports: [
     MatButtonModule,
     MatDialogModule,

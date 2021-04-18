@@ -1,12 +1,9 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Article } from 'src/app/models/articles';
 import { ArticleService } from 'src/app/services/ArticleService/article.service';
 import { AuthService } from 'src/app/services/AuthService/auth.service';
 import { ModalService } from 'src/app/services/ModalService/modal.service';
-import { UserService } from 'src/app/services/UserService/user.service';
 
 @Component({
   selector: 'app-article',
@@ -20,11 +17,7 @@ export class ArticleComponent implements OnInit {
   isFavorited: boolean = false;
   newComment: string = '';
   errorMessage: string = '';
-  currentUser: {
-    username: string;
-    email: string;
-    token: string;
-  };
+  currentUser: {username: any, email: string, token: string}
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -52,7 +45,7 @@ export class ArticleComponent implements OnInit {
         following: false,
       },
     };
-    this.currentUser = this.authService.currentUser;
+    this.currentUser = this.authService.currentUser || {username: '', email: '', token: ''}
     this.activateRoute.params.subscribe((data) => {
       this.slug = data.slug;
       this.articleService
@@ -75,14 +68,6 @@ export class ArticleComponent implements OnInit {
 
   get getAuthor() {
     return this.slugArticle.author.username;
-  }
-
-  get getImage() {
-    return this.slugArticle.author.image;
-  }
-
-  get getCreatedTime() {
-    return this.slugArticle.createdAt;
   }
 
   get getBody() {
@@ -136,4 +121,5 @@ export class ArticleComponent implements OnInit {
       }
     })    
   }
+
 }

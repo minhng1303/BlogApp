@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   chipList = [];
   selectedChip: string = '';
   selectedTab: string = 'Global Feed';
-  headingTab: string[] = ['My Feed', 'Global Feed'];
+  headingTab: string[] = ['Global Feed'];
   totalItems: number = 0;
   itemsPerPage: number = 5;
   recommendedUser = []
@@ -50,18 +50,20 @@ export class HomeComponent implements OnInit {
       this.spinner.hide();
     });
 
-    this.userService.getUser().subscribe(res => {
-      this.currentUser = res['user']
-    })
-
     this.articleService.getTag().subscribe((res: any) => {
           this.chipList = res.tags.filter(e => 
           JSON.stringify(e).replace( /\W/g, '').length
       )})
     
-    this.articleService.getFollowedArticle().subscribe(res => {
-      this.followArticle = res['articles']
-    })
+    if (this.authService.isAuthenticated) {
+      this.headingTab.unshift('My Feed')
+      this.articleService.getFollowedArticle().subscribe(res => {
+        this.followArticle = res['articles']
+      })
+      this.userService.getUser().subscribe(res => {
+        this.currentUser = res['user']
+      })
+    }
   }
 
   getPageTagArticles(page) {
@@ -87,7 +89,6 @@ export class HomeComponent implements OnInit {
       })
     }
     this.selectedPage = page;
-    
     if (page%4 == 0 && Math.floor(page/4) !== Math.floor(this.selectedPage/4)) {
       this.spinner.show()
       this.articleService.getArticleOffset(page/4*20).subscribe(res => {

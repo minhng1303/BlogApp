@@ -1,64 +1,9 @@
-// import { HttpClient } from '@angular/common/http';
-// import { Component, OnInit } from '@angular/core';
-// import { FormBuilder, Validators } from '@angular/forms';
-// import { Router } from '@angular/router';
-// import { ArticleService } from 'src/app/services/ArticleService/article.service';
-// import { AuthService } from 'src/app/services/AuthService/auth.service';
-// import { NgxSpinnerService } from 'ngx-spinner';
-
-// @Component({
-//   selector: 'app-new-article',
-//   templateUrl: './new-article.component.html',
-//   styleUrls: ['./new-article.component.scss'],
-// })
-// export class NewArticleComponent implements OnInit {
-//   articleForm;
-//   constructor(
-//     private router: Router,
-//     private articleService: ArticleService,
-//     private auth: AuthService,
-//     private spinner: NgxSpinnerService,
-//     private fb: FormBuilder
-//   ) {}
-
-//   ngOnInit(): void {
-//     this.spinner.show();
-//     setTimeout(() => {
-//       this.spinner.hide();
-//     }, 3000);
-//     this.articleForm = this.fb.group({
-//       title: ['', [Validators.required, Validators.minLength(3)]],
-//       description: ['', [Validators.required, Validators.minLength(3)]],
-//       body: ['', [Validators.required]],
-//     });
-//   }
-
-//   creatArticle(title: string, description: string, body: string, tagList: []) {
-//     this.articleService
-//       .creatArticle(title, description, body, tagList)
-//       .toPromise()
-//       .then((res) => {
-//         this.router.navigate(['']);
-//       });
-//   }
-
-//   get(val) {
-//     return this.articleForm.controls[val];
-//   }
-
-//   log() {
-//     console.log(this.articleForm);
-//   }
-
-//   cancel() {
-//     this.router.navigate(['/new-article']);
-//   }
-// }
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from 'src/app/services/ArticleService/article.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Article } from 'src/app/models/articles';
 
 @Component({
   selector: 'app-new-article',
@@ -70,14 +15,15 @@ export class NewArticleComponent implements OnInit {
   tagList = [];
   index: number = 0;
   errorMessage: string;
+  editMode: boolean = false;
+  slugArticle: Article;
   constructor(
     private router: Router,
     private articleService: ArticleService,
     private spinner: NgxSpinnerService,
-    private fb: FormBuilder
-  ) {}
-
-  ngOnInit(): void {
+    private fb: FormBuilder,
+    private route: ActivatedRoute
+  ) {
     this.articleForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(3)]],
@@ -86,17 +32,48 @@ export class NewArticleComponent implements OnInit {
     });
   }
 
-  creatArticle() {
+  ngOnInit(): void {
+    this.route.params.subscribe((res: any) => {
+      if (res.slug) {
+        this.editMode = true;        
+        this.articleService.getSlugArticle(res.slug).subscribe((res: any) => {
+          this.slugArticle = res['article']
+          this.articleForm.patchValue({
+            title: res['article'].title,
+            description: res['article'].description,
+            body: res['article'].body,
+          })
+          this.tagList = res['article'].tagList;
+        })
+      }  
+    })
+  }
+
+  creatArticle(e) {
+    e.stopPropagation();
     this.articleService
-      .creatArticle(this.articleForm.value.title, this.articleForm.value.description, this.articleForm.value.body, this.tagList)
-      .toPromise()
-      .then((res) => {
+      .creatArticle(
+            this.articleForm.value.title, 
+            this.articleForm.value.description, 
+            this.articleForm.value.body, 
+            this.tagList)
+      .subscribe((res: any) => {
         this.router.navigate(['/profile']);
-      }).catch((res:any) => {
-        // this.errorMessage = res;
-        console.log(res);
-        
-      });
+      },((res:any) => {
+        this.errorMessage = res.errors.error.message;
+      })
+    )};
+
+  editArticle(e) {
+    e.stopPropagation();
+    this.articleService.updateArticle(
+        this.articleForm.value.title, 
+        this.articleForm.value.description, 
+        this.articleForm.value.body, 
+        this.tagList, 
+        this.slugArticle.slug).subscribe(res => {
+          this.router.navigate(['article',this.slugArticle.slug])
+        })
   }
 
   get(val) {
@@ -104,11 +81,21 @@ export class NewArticleComponent implements OnInit {
   }
 
   addTag(val,e) {
+    e.preventDefault();
+    this.tagList.push(val)
+    this.get('tagList').reset();
+  }
+
+  addTagbyEnter(val,e) {
     e.stopPropagation();
     this.tagList.push(val)
-    console.log(this.get('tagList').reset());
-    
-    
+    this.get('tagList').reset();
+  }
+
+  deleteTag(tag) {
+    this.tagList = this.tagList.filter(ele => {
+      return ele != tag;
+    })
   }
 
   getAllTag() {
@@ -121,7 +108,8 @@ export class NewArticleComponent implements OnInit {
     console.log(this.articleForm);
   }
 
-  cancel() {
-    this.router.navigate(['/new-article']);
+  cancel(e) {
+    e.stopPropagation();
+    this.router.navigate(['/']);
   }
 }

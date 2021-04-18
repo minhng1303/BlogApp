@@ -11,7 +11,7 @@ export class AuthService {
   isLogged: boolean = false;
   baseUrl: string = 'https://conduit.productionready.io/api/'
   currentUser: {
-    username: string,
+    username: any,
     email: string,
     token: string
   }

@@ -12,9 +12,11 @@ import { AuthService } from 'src/app/services/AuthService/auth.service';
 export class LikeButtonComponent implements OnInit {
   @Input('article') article;
   @Input('articles') articles;
-  @Output() showTagArticle = new EventEmitter()
+  @Output('onLikeChange')
+  onLikeChange: EventEmitter<boolean> = new EventEmitter();
   constructor(private articleService: ArticleService, 
-              private authService: AuthService, private router: Router) {}
+              private authService: AuthService, 
+              private router: Router) {}
 
   ngOnInit(): void {
    
@@ -31,6 +33,7 @@ export class LikeButtonComponent implements OnInit {
           if (ele.slug == article.slug) {
             article.favorited = true;
             article.favoritesCount++;
+            this.onLikeChange.emit(article);
             }
           })
         });
@@ -41,6 +44,7 @@ export class LikeButtonComponent implements OnInit {
         if (ele.slug == article.slug) {
           article.favorited = false;
           article.favoritesCount--;
+          this.onLikeChange.emit(article);
         }
       })
     }); 

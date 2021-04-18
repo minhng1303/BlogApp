@@ -48,6 +48,18 @@ export class ArticleService {
       `${this.baseUrl}articles?offset=${offset}`
     );
   } 
+ 
+  getArticleOffsetByFav(offset:number, username: string) {
+    return this.http.get(
+      `${this.baseUrl}articles?offset=${offset}&favorited=${username}`
+    );
+  } 
+
+  getArticleOffsetByUser(offset:number, username: string) {
+    return this.http.get(
+      `${this.baseUrl}articles?offset=${offset}&author=${username}`
+    );
+  } 
 
   getArticleLimit(limit :number) {
     return this.http.get(
@@ -78,17 +90,19 @@ export class ArticleService {
     );
   }
 
-  creatArticle(title: string,description: string,body: string,tagList: Array<string>) {
+  creatArticle(title: string,description: string,body: string,tagList: Array<String>) {
     return this.http.post(`${this.baseUrl}articles`, 
     {
-      title: title,
-      description: description,
-      body: body,
-      tagList: tagList,
-    });
+      "article": {
+        title: title,
+        description: description,
+        body: body,
+        tagList: [...tagList]
+      }
+    })
   }
 
-  updateArticle(title: string, description: string, body: string, slug: string) {
+  updateArticle(title: string, description: string, body: string,tagList: Array<String>,slug: string) {
     return this.http.put(
       `${this.baseUrl}articles/${slug}`,
       {
@@ -96,6 +110,7 @@ export class ArticleService {
           title: title,
           description: description,
           body: body,
+          tagList: [...tagList]
         },
       }
     );

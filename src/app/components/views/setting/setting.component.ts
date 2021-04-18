@@ -53,7 +53,14 @@ export class SettingComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.auth.currentUser.username = this.settingForm.value.username;
-          this.router.navigate(['/profile']);
+          let hash = {
+            username: this.settingForm.value.username, 
+            email: this.auth.currentUser.email,
+            token: this.auth.currentUser.token
+          }
+          localStorage.setItem('user', JSON.stringify(hash))
+          this.router.navigate(['/profile']);          
+          
         },
         (err: any) => {          
           this.usernameError = err.error.errors.username[0];          
@@ -65,10 +72,11 @@ export class SettingComponent implements OnInit {
     return this.settingForm.controls[val];
   }
 
-  cancel() {
-    this.router.navigate(['/setting']);
+  cancel(e) {
+    e.stopPropagation();
+    this.router.navigate(['/']);
   }
-
+  
   onKeyUp() {
     this.usernameError = '';
   }
