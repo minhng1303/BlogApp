@@ -29,12 +29,11 @@ export class UserPostComponent implements OnInit {
     private userService: UserService,
     private dialog: ModalService,
     private spinner: NgxSpinnerService,
-    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.spinner.show();
-    const url = this.router.url.match('(?<=/profile/)(.*)(?=/posted)')
+    const url = this.router.url.match('(?<=/profile/)(.*)(?=/my-article)')    
     this.articleService.getArticleByAuthor(url[0]).subscribe((res: any) => {
     this.userArticle = res['articles'];
     this.slugArticle = res['articles'];

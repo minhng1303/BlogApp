@@ -56,11 +56,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'posted',
+        redirectTo: 'my-article',
         pathMatch: 'full',
       },
       {
-        path: 'posted',
+        path: 'my-article',
         component: UserPostComponent,
         canActivate: [AuthGuard],
       },
@@ -71,28 +71,28 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'profile',
-    component: MyProfileComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        redirectTo: 'my-article',
-        pathMatch: 'full',
-      },
-      {
-        path: 'my-article',
-        component: MyArticleComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'favorited',
-        component: FavoritedArticleComponent,
-        canActivate: [AuthGuard],
-      },
-    ],
-  },
+  // {
+  //   path: 'profile',
+  //   component: MyProfileComponent,
+  //   canActivate: [AuthGuard],
+  //   children: [
+  //     {
+  //       path: '',
+  //       redirectTo: 'my-article',
+  //       pathMatch: 'full',
+  //     },
+  //     {
+  //       path: 'my-article',
+  //       component: MyArticleComponent,
+  //       canActivate: [AuthGuard],
+  //     },
+  //     {
+  //       path: 'favorited',
+  //       component: FavoritedArticleComponent,
+  //       canActivate: [AuthGuard],
+  //     },
+  //   ],
+  // },
   {
     path: 'login',
     component: LoginComponent,

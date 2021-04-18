@@ -42,11 +42,11 @@ export class UserFavoritedComponent implements OnInit {
       });    
   }
 
-  handleLikeChange(arc) {
-    this.favoritedArticles = this.favoritedArticles.filter(article => {
-      return article.slug != arc.slug;
-    })
-  }
+  // handleLikeChange(arc) {
+  //   this.favoritedArticles = this.favoritedArticles.filter(article => {
+  //     return article.slug != arc.slug;
+  //   })
+  // }
 
   getPageArticles(page) {
     this.favoritedArticles = this.slugArticle.slice(page*5, page*5+5)

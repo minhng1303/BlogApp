@@ -22,8 +22,9 @@ a {
   cursor: pointer;
 }
 
-.active {
-  color: red;
+a.active {
+  color: #5ba7be !important;
+  border-bottom: 1px solid #5ba7be !important;
 }
 
 .showActiveTab {

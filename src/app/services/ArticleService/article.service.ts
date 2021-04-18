@@ -33,7 +33,7 @@ export class ArticleService {
 
   getArticleByAuthor(author: string) {
     return this.http.get(
-      'https://conduit.productionready.io/api/articles?author=' + author
+      `${this.baseUrl}articles?author=${author}`
     );
   }
 

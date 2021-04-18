@@ -2,7 +2,7 @@ import { Article } from './../../../../models/articles';
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from 'src/app/services/ArticleService/article.service';
 import { AuthService } from 'src/app/services/AuthService/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/UserService/user.service';
 import { ModalService } from 'src/app/services/ModalService/modal.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -26,14 +26,16 @@ export class MyArticleComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private dialog: ModalService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.spinner.show();
     this.getUser();
+    const url = this.router.url.match('(?<=/profile/)(.*)(?=/my-article)')
     this.articleService
-      .getArticleByAuthor(this.auth.currentUser.username)
+      .getArticleByAuthor(url[0])
       .subscribe((res: any) => {
         this.myArticle = res['articles'];
         this.slugArticle = res['articles'];
