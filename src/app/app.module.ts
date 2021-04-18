@@ -41,6 +41,9 @@ import { NewPostIconComponent } from './components/commons/new-post-icon/new-pos
 import { NotFoundComponent } from './components/views/not-found/not-found.component';
 import { ArticleHeaderComponent } from './components/commons/article-header/article-header.component';
 import { ParticlesModule } from 'angular-particle';
+import { UserProfileComponent } from './components/views/user-profile/user-profile.component';
+import { UserPostComponent } from './components/views/user-profile/user-post/user-post.component';
+import { UserFavoritedComponent } from './components/views/user-profile/user-favorited/user-favorited.component';
 
 
 
@@ -74,6 +77,9 @@ import { ParticlesModule } from 'angular-particle';
     NewPostIconComponent,
     NotFoundComponent,
     ArticleHeaderComponent,
+    UserProfileComponent,
+    UserPostComponent,
+    UserFavoritedComponent,
   ],
   entryComponents: [DialogComponent, OptionDialogComponent],
   imports: [

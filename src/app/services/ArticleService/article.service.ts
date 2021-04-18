@@ -5,36 +5,28 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ArticleService {
-  baseUrl: string = 'https://conduit.productionready.io/api/'
+  baseUrl: string = 'https://conduit.productionready.io/api/';
 
   constructor(private http: HttpClient) {}
-  
+
   getArticle() {
     return this.http.get(`${this.baseUrl}articles`);
   }
 
   getSlugArticle(slug) {
-    return this.http.get(
-      `${this.baseUrl}articles/${slug}`
-    );
+    return this.http.get(`${this.baseUrl}articles/${slug}`);
   }
 
   getFollowedArticle() {
-    return this.http.get(
-      `${this.baseUrl}articles/feed`
-    );
+    return this.http.get(`${this.baseUrl}articles/feed`);
   }
 
   getArticleByTag(tag: string) {
-    return this.http.get(
-      `${this.baseUrl}articles?tag=${tag}`
-    );
+    return this.http.get(`${this.baseUrl}articles?tag=${tag}`);
   }
 
   getArticleByAuthor(author: string) {
-    return this.http.get(
-      'https://conduit.productionready.io/api/articles?author=' + author
-    );
+    return this.http.get(`${this.baseUrl}articles?author=${author}`);
   }
 
   getArticleByFav(user: string) {
@@ -43,33 +35,30 @@ export class ArticleService {
     );
   }
 
-  getArticleOffset(offset:number) {
-    return this.http.get(
-      `${this.baseUrl}articles?offset=${offset}`
-    );
-  } 
+  getArticleOffset(offset: number) {
+    return this.http.get(`${this.baseUrl}articles?offset=${offset}`);
+  }
 
-  getArticleLimit(limit :number) {
+  getArticleOffsetByFav(offset: number, username: string) {
     return this.http.get(
-      `${this.baseUrl}articles?limit=${limit}`
-    );
-  } 
-
-  getCommentArticle(slug) {
-    return this.http.get(
-      `${this.baseUrl}articles/${slug}/comments`
+      `${this.baseUrl}articles?offset=${offset}&favorited=${username}`
     );
   }
 
+  getArticleLimit(limit: number) {
+    return this.http.get(`${this.baseUrl}articles?limit=${limit}`);
+  }
+
+  getCommentArticle(slug) {
+    return this.http.get(`${this.baseUrl}articles/${slug}/comments`);
+  }
+
   addCommentArticle(slug, body: string) {
-    return this.http.post(
-      `${this.baseUrl}articles/${slug}/comments`,
-      {
-        comment: {
-          body: body,
-        },
-      }
-    );
+    return this.http.post(`${this.baseUrl}articles/${slug}/comments`, {
+      comment: {
+        body: body,
+      },
+    });
   }
 
   deleteCommentArticle(slug, id) {
@@ -78,9 +67,13 @@ export class ArticleService {
     );
   }
 
-  creatArticle(title: string,description: string,body: string,tagList: Array<string>) {
-    return this.http.post(`${this.baseUrl}articles`, 
-    {
+  creatArticle(
+    title: string,
+    description: string,
+    body: string,
+    tagList: Array<string>
+  ) {
+    return this.http.post(`${this.baseUrl}articles`, {
       title: title,
       description: description,
       body: body,
@@ -88,17 +81,19 @@ export class ArticleService {
     });
   }
 
-  updateArticle(title: string, description: string, body: string, slug: string) {
-    return this.http.put(
-      `${this.baseUrl}articles/${slug}`,
-      {
-        article: {
-          title: title,
-          description: description,
-          body: body,
-        },
-      }
-    );
+  updateArticle(
+    title: string,
+    description: string,
+    body: string,
+    slug: string
+  ) {
+    return this.http.put(`${this.baseUrl}articles/${slug}`, {
+      article: {
+        title: title,
+        description: description,
+        body: body,
+      },
+    });
   }
 
   deleteArticle(slug) {
@@ -124,5 +119,4 @@ export class ArticleService {
   getTag() {
     return this.http.get(`${this.baseUrl}tags`);
   }
-
 }

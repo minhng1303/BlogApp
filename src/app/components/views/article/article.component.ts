@@ -59,6 +59,8 @@ export class ArticleComponent implements OnInit {
         .getSlugArticle(data.slug)
         .subscribe((res: Article) => {
           this.slugArticle = res['article'];
+          console.log(this.slugArticle);
+
           this.isFavorited = this.slugArticle.favorited;
         });
       this.articleService
@@ -122,18 +124,21 @@ export class ArticleComponent implements OnInit {
   }
 
   deleteComment(comment) {
-    this.dialog.openConfirmDialog().afterClosed().subscribe(res => {
-      if (res) {
-        this.articleService
-      .deleteCommentArticle(this.slug, comment.id)
+    this.dialog
+      .openConfirmDialog()
+      .afterClosed()
       .subscribe((res) => {
-        this.articleService
-          .getCommentArticle(this.slug)
-          .subscribe((res: Comment[]) => {
-            this.slugComment = res['comments'];
-          });
+        if (res) {
+          this.articleService
+            .deleteCommentArticle(this.slug, comment.id)
+            .subscribe((res) => {
+              this.articleService
+                .getCommentArticle(this.slug)
+                .subscribe((res: Comment[]) => {
+                  this.slugComment = res['comments'];
+                });
+            });
+        }
       });
-      }
-    })    
   }
 }
