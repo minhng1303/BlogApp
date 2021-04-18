@@ -1,0 +1,104 @@
+<div class="profile-page">
+  <div class="profile-container">
+    <div
+      class="col-12 py-3 d-flex justify-content-center align-items-center flex-wrap"
+    >
+      <div class="row">
+        <div class="col-12 px-0 text-center">
+          <img
+            class="img my-3"
+            src="{{ selectedUser.image }}"
+            alt=""
+            style="width: 180px; height: 180px"
+          />
+          <h1 class="text-light col-12 px-0 text-center">
+            {{ selectedUser.username }}
+          </h1>
+          <span class="text-light col-12 px-0 text-center">
+            {{ selectedUser.bio }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ------------------------BODY------------------------------ -->
+  <div class="row mx-auto shadow border col-10 rounded bg-light py-3 mt-3">
+    <ul class="nav w-100 showActiveTab">
+      <li class="nav-item">
+        <a
+          class="nav-link text-secondary font-weight-bold"
+          routerLink="posted"
+          routerLinkActive="active"
+          >Posted</a
+        >
+      </li>
+      <li class="nav-item h-100 my-0">
+        <a
+          class="nav-link text-secondary font-weight-bold"
+          routerLink="favorited"
+          routerLinkActive="active"
+          >Favorited
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="mx-auto justify-content-between rounded col-10 d-flex p-0 mt-4">
+    <!-- TO DO -->
+    <div class="col-4 rounded p-0">
+      <div class="bg-light rounded shadow border p-1 py-3">
+        <strong class="pl-3 mb-3">Introduce:</strong>
+        <ul class="pl-3">
+          <li class="my-1">
+            <img
+              class="hu5pjgll cwsop09l mr-1"
+              src="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/id4jdGYPaIP.png"
+              alt=""
+              height="20"
+              width="20"
+            />
+            <span>
+              Studied at <strong>Le Quy Don highschool, Hanoi</strong></span
+            >
+          </li>
+          <li class="my-1">
+            <img
+              class="hu5pjgll cwsop09l mr-1"
+              src="https://static.xx.fbcdn.net/rsrc.php/v3/yk/r/X_t0JnueVu-.png"
+              alt=""
+              height="20"
+              width="20"
+            />
+            <span> Live at <strong> Hanoi </strong></span>
+          </li>
+          <li class="my-1">
+            <img
+              class="hu5pjgll cwsop09l mr-1"
+              src="https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/S0aTxIHuoYO.png"
+              alt=""
+              height="20"
+              width="20"
+            />
+            <span> Dating</span>
+          </li>
+          <li class="my-1">
+            <img
+              class="hu5pjgll cwsop09l mr-1"
+              src="https://static.xx.fbcdn.net/rsrc.php/v3/yv/r/JanwljMyOww.png"
+              alt=""
+              height="20"
+              width="20"
+            />
+            <span> Have <strong>200 followers </strong></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!----------------------->
+    <div class="col-8 pr-0">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

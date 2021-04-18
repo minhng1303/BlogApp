@@ -22,6 +22,11 @@ export class ArticleHeaderComponent implements OnInit {
     this.router.navigate([`article/${slug}`]);
   }
 
+  goToProfile(article) {
+    let author = article.author.username;
+    this.router.navigate(['profile',author])
+  }
+
   showOption() {
     this.dialog.openOptionDialog().afterClosed().subscribe(res => {
       

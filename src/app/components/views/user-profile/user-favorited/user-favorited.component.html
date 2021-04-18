@@ -1,0 +1,43 @@
+<div
+  class="card shadow-lg mb-4 w-100 p-2"
+  style="width: 18rem"
+  *ngFor="let article of favoritedArticles"
+>
+  <app-article-header [article]="article" [showDot]="true">
+  </app-article-header>
+
+  <div class="card-body pt-2 pb-0 pl-2">
+    <hr class="mt-0" />
+    <!-- -----CARD BORDY------ -->
+    <app-article-body [article]="article"> </app-article-body>
+
+    <!-- -----CARD BORDY------ -->
+    <div class="d-flex justify-content-between col-12 mt-2 px-0">
+      <app-like-button
+        class="col-2"
+        [article]="article"
+        [articles]="favoritedArticles"
+        (onLikeChange)="handleLikeChange($event)"
+      ></app-like-button>
+      <div class="d-flex justify-content-end align-items-center flex-wrap">
+        <span
+          *ngFor="let tag of article.tagList"
+          class="badge badge-pill badge-info mx-1 mb-1 ml-auto"
+        >
+          #{{ tag }}
+        </span>
+      </div>
+    </div>
+    <!-- ------ICON BOX-------- -->
+    <div class="col-12 d-flex justify-content-between">
+      <span> {{ article.favoritesCount }} likes </span>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-center mt-4">
+  <app-pagination
+    [totalItems]="totalItems"
+    [itemsPerPage]="itemsPerPage"
+    (onPageChange)="handlePageChange($event)"
+  ></app-pagination>
+</div>

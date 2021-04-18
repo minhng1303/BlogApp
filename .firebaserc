@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "pad3-team2": {
+      "hosting": {
+        "FinalProject": [
+          "pad3-team2"
+        ]
+      }
+    }
+  }
+}

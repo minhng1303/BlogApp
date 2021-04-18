@@ -41,8 +41,9 @@ import { NotFoundComponent } from './components/views/not-found/not-found.compon
 import { ArticleHeaderComponent } from './components/commons/article-header/article-header.component';
 import { ParticlesModule } from 'angular-particle';
 import { ArticleBodyComponent } from './components/commons/article-body/article-body.component';
-
-
+import { UserProfileComponent } from './components/views/user-profile/user-profile.component';
+import { UserPostComponent } from './components/views/user-profile/user-post/user-post.component';
+import { UserFavoritedComponent } from './components/views/user-profile/user-favorited/user-favorited.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,9 @@ import { ArticleBodyComponent } from './components/commons/article-body/article-
     NotFoundComponent,
     ArticleHeaderComponent,
     ArticleBodyComponent,
+    UserProfileComponent,
+    UserPostComponent,
+    UserFavoritedComponent,
   ],
   entryComponents: [OptionDialogComponent, DialogComponent],
   imports: [

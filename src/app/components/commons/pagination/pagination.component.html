@@ -1,4 +1,4 @@
-<ul class="pagination shadow my-4" style="z-index: 99">
+<ul class="pagination shadow my-4" style="z-index: 99" *ngIf="totalItems > 0">
   <li
     class="page-item"
     [class.disabled]="disablePreviousButton()"
