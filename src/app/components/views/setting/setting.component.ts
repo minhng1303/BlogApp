@@ -59,7 +59,7 @@ export class SettingComponent implements OnInit {
             token: this.auth.currentUser.token
           }
           localStorage.setItem('user', JSON.stringify(hash))
-          this.router.navigate(['/profile']);          
+          this.router.navigate(['/profile',hash.username]);          
           
         },
         (err: any) => {          
