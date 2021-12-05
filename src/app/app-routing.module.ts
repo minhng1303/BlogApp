@@ -1,3 +1,5 @@
+import { AttemptScreenComponent } from './components/views/challenge/attemp-screen/attempt-screen/attempt-screen.component';
+import { ChallengeComponent } from './components/views/challenge/challenge.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ArticleComponent } from './components/views/article/article.component';
@@ -38,6 +40,14 @@ const routes: Routes = [
   {
     path: 'about-us',
     component: AboutUsComponent,
+  },
+  {
+    path: 'challenge',
+    component: ChallengeComponent,
+  },
+  {
+    path: 'challenge/:topicName',
+    component: AttemptScreenComponent,
   },
   {
     path: 'new-article',
@@ -103,8 +113,8 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: NotFoundComponent
-  }
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({

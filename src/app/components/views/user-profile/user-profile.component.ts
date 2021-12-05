@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/UserService/user.service';
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
-  selectedUser: {image: string,username: string, bio: string};
+  selectedUser: { image: string; username: string; bio: string };
   articles: any;
   slugArticle: Article;
   constructor(
@@ -20,11 +20,16 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.selectedUser = {image: '',username: '', bio: ''};
+    this.selectedUser = { image: '', username: '', bio: '' };
     this.route.params.subscribe((p: any) => {
-      this.userService.getProfile(p['username']).subscribe((res:any) => {
+      this.userService.getProfile(p['username']).subscribe((res: any) => {
         this.selectedUser = res['profile'];
-        });
-      })
-    }
+        console.log(this.selectedUser);
+        if (this.selectedUser.image == null) {
+          this.selectedUser.image =
+            'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
+        }
+      });
+    });
+  }
 }

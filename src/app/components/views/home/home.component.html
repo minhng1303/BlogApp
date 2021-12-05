@@ -5,39 +5,22 @@
         <!-----------------TAB------------------->
         <ul class="nav nav-tabs mb-4">
           <li class="nav-item" *ngFor="let tab of headingTab">
-            <a
-              class="nav-link text-secondary font-weight-bold"
-              (click)="selectTab(tab)"
-              [class.active-tab]="selectedTab == tab"
-              >{{ tab }}</a
-            >
+            <a class="nav-link text-secondary font-weight-bold" (click)="selectTab(tab)"
+              [class.active-tab]="selectedTab == tab">{{ tab }}</a>
           </li>
         </ul>
         <!-- -------------NEW POST-------------->
-        <div
-          class="w-100 border bg-light rounded shadow mb-4"
-          *ngIf="authService.isAuthenticated"
-        >
+        <div class="w-100 border bg-light rounded shadow mb-4" *ngIf="authService.isAuthenticated">
           <div class="d-flex align-items-center px-3">
-            <img
-              src="{{ currentUser.image }}"
-              alt="image"
-              class="rounded-circle"
-              style="width: 40px; height: 40px"
-            />
+            <img src="{{currentUser.image}}" alt="image" class="rounded-circle" style="width: 40px; height: 40px" />
 
-            <input
-              placeholder="What are you thinking?"
-              class="new-post w-100 h-100 pl-2 pt-4 pb-3 bg-light"
-            />
+            <input placeholder="What are you thinking?" class="new-post w-100 h-100 pl-2 pt-4 pb-3 bg-light" />
           </div>
           <div class="w-100 py-3 px-4 d-flex justify-content-between">
             <app-new-post-icon></app-new-post-icon>
             <div>
-              <span
-                (click)="addPost('a', 'b', 'c', ['d'])"
-                class="badge badge-info text-light border border-info font-weight-bold p-2"
-              >
+              <span (click)="addPost('a', 'b', 'c', ['d'])"
+                class="badge badge-info text-light border border-info font-weight-bold p-2">
                 <a>Post</a>
               </span>
             </div>
@@ -45,10 +28,7 @@
         </div>
 
         <!-- -------------BLOG CARD------------->
-        <div
-          class="card shadow-lg mb-4 w-100 p-2"
-          *ngFor="let article of articles"
-        >
+        <div class="card shadow-lg mb-4 w-100 p-2" *ngFor="let article of articles">
           <app-article-header [article]="article" [showDot]="true">
           </app-article-header>
 
@@ -58,18 +38,9 @@
             <app-article-body [article]="article"> </app-article-body>
             <!-- -----CARD BORDY------ -->
             <div class="d-flex justify-content-between col-12 mt-2 px-0">
-              <app-like-button
-                class="col-2"
-                [article]="article"
-                [articles]="articles"
-              ></app-like-button>
-              <div
-                class="d-flex justify-content-end align-items-center flex-wrap"
-              >
-                <span
-                  *ngFor="let tag of article.tagList"
-                  class="badge badge-pill badge-info mx-1 mb-1 ml-auto"
-                >
+              <app-like-button class="col-2" [article]="article" [articles]="articles"></app-like-button>
+              <div class="d-flex justify-content-end align-items-center flex-wrap">
+                <span *ngFor="let tag of article.tagList" class="badge badge-pill badge-info mx-1 mb-1 ml-auto">
                   #{{ tag }}
                 </span>
               </div>
@@ -82,25 +53,15 @@
         </div>
         <!-- ------SIDE BOX------- -->
         <div class="d-flex justify-content-center mt-4">
-          <app-pagination
-            [totalItems]="totalItems"
-            [itemsPerPage]="itemsPerPage"
-            (onPageChange)="handlePageChange($event)"
-          ></app-pagination>
+          <app-pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+            (onPageChange)="handlePageChange($event)"></app-pagination>
         </div>
       </div>
       <div class="col-4 mt-5">
         <!-- ------APP CHIP---------->
-        <app-chips
-          class="shadow-sm"
-          [chipList]="chipList"
-          (showTagArticle)="showTagArticle($event)"
-        ></app-chips>
+        <app-chips class="shadow-sm" [chipList]="chipList" (showTagArticle)="showTagArticle($event)"></app-chips>
         <!-- ------RECOMMENDED USER---------->
-        <app-recommender
-          *ngIf="authService.isAuthenticated"
-          [recommendedUser]="recommendedUser"
-        ></app-recommender>
+        <app-recommender *ngIf="authService.isAuthenticated" [recommendedUser]="recommendedUser"></app-recommender>
         <!-- ------------------------- -->
         <app-footer></app-footer>
       </div>

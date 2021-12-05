@@ -31,9 +31,9 @@ import { FollowButtonComponent } from './components/commons/follow-button/follow
 import { DeleteButtonComponent } from './components/commons/delete-button/delete-button.component';
 import { EditButtonComponent } from './components/commons/edit-button/edit-button.component';
 import { FavoriteButtonComponent } from './components/commons/favorite-button/favorite-button.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './components/commons/dialog/dialog.component';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { OptionDialogComponent } from './components/commons/option-dialog/option-dialog.component';
 import { AboutUsComponent } from './components/views/about-us/about-us.component';
 import { NewPostIconComponent } from './components/commons/new-post-icon/new-post-icon.component';
@@ -44,6 +44,9 @@ import { ArticleBodyComponent } from './components/commons/article-body/article-
 import { UserProfileComponent } from './components/views/user-profile/user-profile.component';
 import { UserPostComponent } from './components/views/user-profile/user-post/user-post.component';
 import { UserFavoritedComponent } from './components/views/user-profile/user-favorited/user-favorited.component';
+import { ChallengeComponent } from './components/views/challenge/challenge.component';
+import { MatCardModule } from '@angular/material/card';
+import { AttemptScreenComponent } from './components/views/challenge/attemp-screen/attempt-screen/attempt-screen.component';
 
 @NgModule({
   declarations: [
@@ -78,11 +81,14 @@ import { UserFavoritedComponent } from './components/views/user-profile/user-fav
     UserProfileComponent,
     UserPostComponent,
     UserFavoritedComponent,
+    ChallengeComponent,
+    AttemptScreenComponent,
   ],
   entryComponents: [OptionDialogComponent, DialogComponent],
   imports: [
     MatButtonModule,
     MatDialogModule,
+    MatCardModule,
     NgxSpinnerModule,
     MatChipsModule,
     MatTabsModule,
@@ -94,8 +100,7 @@ import { UserFavoritedComponent } from './components/views/user-profile/user-fav
     ReactiveFormsModule,
     FormsModule,
     NgxSpinnerModule,
-    ParticlesModule
-    
+    ParticlesModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

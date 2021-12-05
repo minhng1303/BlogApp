@@ -1,0 +1,13 @@
+<div class="col-8 mx-auto mt-4">
+    <div class="answer-box" *ngFor="let question of questions; let i = index">
+        <h3>Question {{i+1}} of 10</h3>
+        <div class="answer-box__questions">{{question.text}}</div>
+        <div class="answer-box__choice-list">
+            <div class="answer-box__choice" (click)="handleChoose($event, answer, question._id)"
+                *ngFor="let answer of question.answers; let i = index">
+                <input type="radio" name="question1" value="{{answer}}">
+                <span>{{answer}}</span>
+            </div>
+        </div>
+    </div>
+</div>

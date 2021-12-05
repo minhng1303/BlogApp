@@ -2,40 +2,25 @@
   <div class="d-flex justify-content-center w-100 flex-wrap">
     <!-- ------------------------------------HEADER------------------------------------------------------->
     <div class="col-12 text-light bg-dark d-flex flex-column py-4 p-3">
-      <h1 class="display-4 col-8 mx-auto">
+      <h1 class="display-4 py-4 col-12 text-center mx-auto">
         <strong>{{ getTitle }}</strong>
       </h1>
-      <div class="col-8 mx-auto d-flex align-items-center">
-        <app-article-header
-          [article]="slugArticle"
-          [showDot]="false"
-          [textlight]="true"
-        >
-        </app-article-header>
-        <div>
-          <app-follow-button
-            *ngIf="getAuthor !== currentUser.username"
-            [slugArticle]="slugArticle"
-          >
-          </app-follow-button>
+    </div>
+    <div class="col-8 mx-auto mt-4 d-flex align-items-center">
+      <app-article-header [article]="slugArticle" [showDot]="false" [textlight]="true">
+      </app-article-header>
+      <div class="ml-auto">
+        <app-follow-button *ngIf="getAuthor !== currentUser.username" [slugArticle]="slugArticle">
+        </app-follow-button>
 
-          <app-favorite-button
-            *ngIf="getAuthor !== currentUser.username"
-            [slugArticle]="slugArticle"
-          ></app-favorite-button>
+        <app-favorite-button *ngIf="getAuthor !== currentUser.username" [slugArticle]="slugArticle">
+        </app-favorite-button>
 
-          <app-edit-button
-            *ngIf="getAuthor == currentUser.username"
-            [slugArticle]="slugArticle"
-          >
-          </app-edit-button>
+        <app-edit-button *ngIf="getAuthor == currentUser.username" [slugArticle]="slugArticle">
+        </app-edit-button>
 
-          <app-delete-button
-            *ngIf="getAuthor == currentUser.username"
-            [slugArticle]="slugArticle"
-          >
-          </app-delete-button>
-        </div>
+        <app-delete-button *ngIf="getAuthor == currentUser.username" [slugArticle]="slugArticle">
+        </app-delete-button>
       </div>
     </div>
 
@@ -51,25 +36,12 @@
     <hr />
 
     <!-- -----------------------------------------ADD COMMENT SECTION------------------------------------------->
-    <div
-      class="col-8 mx-auto d-flex align-items-center justify-content-center pb-5 mt-3 flex-wrap"
-    >
-      <div
-        class="comment-card rounded shadow-lg mx-auto d-flex flex-wrap justify-content-center mt-3 p-0 col-10"
-      >
+    <div class="col-8 mx-auto d-flex align-items-center justify-content-center pb-5 mt-3 flex-wrap">
+      <div class="comment-card rounded shadow-lg mx-auto d-flex flex-wrap justify-content-center mt-3 p-0 col-10">
         <div class="col-12 h-100 input-group px-0">
-          <input
-            type="text"
-            class="form-control py-1"
-            placeholder="Leave a comment"
-            [(ngModel)]="newComment"
-          />
+          <input type="text" class="form-control py-1" placeholder="Leave a comment" [(ngModel)]="newComment" />
           <div class="input-group-append">
-            <span
-              class="input-group-text bg-info text-light py-1 px-2"
-              (click)="addComment()"
-              ><a>Post </a></span
-            >
+            <span class="input-group-text bg-info text-light py-1 px-2" (click)="addComment()"><a>Post </a></span>
           </div>
         </div>
         <small class="text-danger col-12 mt-1" *ngIf="errorMessage.length > 1">
@@ -77,53 +49,31 @@
         </small>
       </div>
       <!-- ----------------------------------------------COMMENT SECTION------------------------------------------------ -->
-      <div
-        *ngIf="authService.isAuthenticated"
-        class="col-12 rounded mx-auto d-flex align-items-center justify-content-center flex-wrap"
-      >
-        <div
-          *ngFor="let comment of slugComment"
-          class="comment-card mt-3 col-10 p-0"
-        >
+      <div *ngIf="authService.isAuthenticated"
+        class="col-12 rounded mx-auto d-flex align-items-center justify-content-center flex-wrap">
+        <div *ngFor="let comment of slugComment" class="comment-card mt-3 col-10 p-0">
           <div class="w-100 d-flex">
-            <img
-              src="{{ comment.author.image }}"
-              style="height: 45px; width: 45px"
-              class="rounded-circle align-self-center mx-auto"
-            />
-            <div
-              class="bg-white col-11 shadow rounded px-3 py-2 flex-grow-1 text-wrap arrow-left ml-3"
-            >
+            <img src="{{ comment.author.image }}" style="height: 45px; width: 45px"
+              class="rounded-circle align-self-center mx-auto" />
+            <div class="bg-white col-11 shadow rounded px-3 py-2 flex-grow-1 text-wrap arrow-left ml-3">
               <span class="text-success">
-                {{ comment.author.username }}
+                {{ comment.author.username || Hello }}
               </span>
               <small class="text-secondary">
                 {{ comment.createdAt | date: "medium" }}
               </small>
-              <div
-                class="d-flex align-items-baseline justify-content-between w-100"
-              >
+              <div class="d-flex align-items-baseline justify-content-between w-100">
                 <span>
                   {{ comment.body }}
                 </span>
                 <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    class="bi bi-trash mb-2"
-                    viewBox="0 0 16 16"
-                    *ngIf="isAuthor(comment)"
-                    (click)="deleteComment(comment)"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    class="bi bi-trash mb-2" viewBox="0 0 16 16" *ngIf="isAuthor(comment)"
+                    (click)="deleteComment(comment)">
                     <path
-                      d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                    />
+                      d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path fill-rule="evenodd"
+                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                   </svg>
                 </span>
               </div>

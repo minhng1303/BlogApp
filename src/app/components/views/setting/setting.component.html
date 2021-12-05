@@ -4,21 +4,15 @@
     <form [formGroup]="settingForm" (ngSubmit)="saveSetting()">
       <div class="formSetting">
         <div class="form-group">
-          <label> URL of profile picture</label>
+          <label> URL of Profile Picture</label>
           <input class="form-control" type="text" formControlName="image" />
         </div>
         <div class="form-group">
-          <label>Your Name</label>
-          <input
-            class="form-control form-control-lg"
-            type="text"
-            formControlName="username"
-            (keyup)="onKeyUp()"
-          />
-          <div class="text-danger" *ngIf="get('username').invalid">
+          <label>Your Username</label>
+          <input class="form-control form-control-lg" type="text" formControlName="username" (keyup)="onKeyUp()" />
+          <div class="text-danger" *ngIf="get('username').invalid && get('username').touched">
             <small *ngIf="get('username').errors.required">
-              Your name can't be empty</small
-            >
+              Your name can't be empty</small>
           </div>
           <div class="text-danger" *ngIf="usernameError.length > 1">
             <small>
@@ -29,19 +23,11 @@
 
         <div class="form-group">
           <label>Short bio about you</label>
-          <textarea
-            class="form-control form-control-lg"
-            rows="3"
-            formControlName="bio"
-          ></textarea>
+          <textarea class="form-control form-control-lg" rows="3" formControlName="bio"></textarea>
         </div>
         <div class="form-group">
           <label>Your Account Email</label>
-          <input
-            class="form-control form-control-lg"
-            type="text"
-            formControlName="email"
-          />
+          <input class="form-control form-control-lg" type="text" formControlName="email" />
         </div>
         <div class="d-flex justify-content-end">
           <div>
@@ -50,12 +36,8 @@
             </button>
           </div>
           <div>
-            <button
-              class="btn btn-info editBtn"
-              [disabled]="!settingForm.valid"
-              [class.disabled]="!settingForm.valid"
-              type="submit"
-            >
+            <button class="btn btn-info editBtn" [disabled]="!settingForm.valid" [class.disabled]="!settingForm.valid"
+              type="submit">
               Save Profile
             </button>
           </div>

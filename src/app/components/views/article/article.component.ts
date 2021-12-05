@@ -17,7 +17,7 @@ export class ArticleComponent implements OnInit {
   isFavorited: boolean = false;
   newComment: string = '';
   errorMessage: string = '';
-  currentUser: {username: any, email: string, token: string}
+  currentUser: { username: any; email: string; token: string };
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -45,7 +45,11 @@ export class ArticleComponent implements OnInit {
         following: false,
       },
     };
-    this.currentUser = this.authService.currentUser || {username: '', email: '', token: ''}
+    this.currentUser = this.authService.currentUser || {
+      username: '',
+      email: '',
+      token: '',
+    };
     this.activateRoute.params.subscribe((data) => {
       this.slug = data.slug;
       this.articleService
@@ -53,12 +57,12 @@ export class ArticleComponent implements OnInit {
         .subscribe((res: Article) => {
           this.slugArticle = res['article'];
           this.isFavorited = this.slugArticle.favorited;
+          this.slugComment = this.slugArticle['comments'];
         });
-      this.articleService
-        .getCommentArticle(this.slug)
-        .subscribe((res: Comment) => {
-          this.slugComment = res['comments'];
-        });
+      // this.articleService
+      //   .getCommentArticle(this.slug)
+      //   .subscribe((res: Comment) => {
+      // });
     });
   }
 
@@ -107,19 +111,21 @@ export class ArticleComponent implements OnInit {
   }
 
   deleteComment(comment) {
-    this.dialog.openConfirmDialog().afterClosed().subscribe(res => {
-      if (res) {
-        this.articleService
-      .deleteCommentArticle(this.slug, comment.id)
+    this.dialog
+      .openConfirmDialog()
+      .afterClosed()
       .subscribe((res) => {
-        this.articleService
-          .getCommentArticle(this.slug)
-          .subscribe((res: Comment[]) => {
-            this.slugComment = res['comments'];
-          });
+        if (res) {
+          this.articleService
+            .deleteCommentArticle(this.slug, comment._id)
+            .subscribe((res) => {
+              this.articleService
+                .getCommentArticle(this.slug)
+                .subscribe((res: Comment[]) => {
+                  this.slugComment = res['comments'];
+                });
+            });
+        }
       });
-      }
-    })    
   }
-
 }

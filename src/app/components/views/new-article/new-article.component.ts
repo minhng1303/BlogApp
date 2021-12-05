@@ -35,73 +35,81 @@ export class NewArticleComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((res: any) => {
       if (res.slug) {
-        this.editMode = true;        
+        this.editMode = true;
         this.articleService.getSlugArticle(res.slug).subscribe((res: any) => {
-          this.slugArticle = res['article']
+          this.slugArticle = res['article'];
           this.articleForm.patchValue({
             title: res['article'].title,
             description: res['article'].description,
             body: res['article'].body,
-          })
+          });
           this.tagList = res['article'].tagList;
-        })
-      }  
-    })
+        });
+      }
+    });
   }
 
   creatArticle(e) {
     e.stopPropagation();
+    let authorName = JSON.parse(localStorage.getItem('user')).username;
     this.articleService
       .creatArticle(
-            this.articleForm.value.title, 
-            this.articleForm.value.description, 
-            this.articleForm.value.body, 
-            this.tagList)
-      .subscribe((res: any) => {
-        this.router.navigate(['/profile']);
-      },((res:any) => {
-        this.errorMessage = res.errors.error.message;
-      })
-    )};
+        this.articleForm.value.title,
+        this.articleForm.value.description,
+        this.articleForm.value.body,
+        this.tagList
+      )
+      .subscribe(
+        (res: any) => {
+          this.router.navigate(['/profile', authorName]);
+        },
+        (res: any) => {
+          this.errorMessage = res.errors.error.message;
+        }
+      );
+  }
 
   editArticle(e) {
     e.stopPropagation();
-    this.articleService.updateArticle(
-        this.articleForm.value.title, 
-        this.articleForm.value.description, 
-        this.articleForm.value.body, 
-        this.tagList, 
-        this.slugArticle.slug).subscribe(res => {
-          this.router.navigate(['article',this.slugArticle.slug])
-        })
+    this.articleService
+      .updateArticle(
+        this.articleForm.value.title,
+        this.articleForm.value.description,
+        this.articleForm.value.body,
+        this.tagList,
+        this.slugArticle.slug
+      )
+      .subscribe((res) => {
+        this.router.navigate(['article', this.slugArticle.slug]);
+      });
   }
 
   get(val) {
     return this.articleForm.controls[val];
   }
 
-  addTag(val,e) {
+  addTag(val, e) {
     e.preventDefault();
-    this.tagList.push(val)
+    this.tagList.push(val);
     this.get('tagList').reset();
   }
 
-  addTagbyEnter(val,e) {
+  addTagbyEnter(val, e) {
     e.stopPropagation();
-    this.tagList.push(val)
+    this.tagList.push(val);
     this.get('tagList').reset();
   }
 
   deleteTag(tag) {
-    this.tagList = this.tagList.filter(ele => {
+    this.tagList = this.tagList.filter((ele) => {
       return ele != tag;
-    })
+    });
   }
 
   getAllTag() {
-    this.tagList.forEach(ele => {
-      return ele
-    })
+    this.tagList.forEach((ele) => {
+      return ele;
+    });
   }
 
   log() {

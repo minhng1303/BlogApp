@@ -1,38 +1,22 @@
 <div class="d-flex align-items-center px-0">
   <div class="d-flex align-items-center">
-    <img
-      [src]="article.author.image"
-      class="card-img-top rounded-circle m-1 img"
-      alt="..."
-      style="width: 32px; height: 32px"
-    />
+    <img [src]="article.author.image" class="card-img-top rounded-circle m-1 img" alt="..."
+      style="width: 32px; height: 32px" />
     <div class="d-flex flex-wrap ml-1">
       <span class="pl-0 col-12" (click)="goToProfile(article)">
-        <a
-          class="font-weight-bold"
-          [class.text-light]="textlight == true"
-          [class.text-info]="!!textlight == false"
-          >{{ article.author.username }}
+        <a class="font-weight-bold" [class.text-dark]="textlight == true" [class.text-info]="!!textlight == false">{{
+          article.author.username }}
         </a>
       </span>
-      <small class="text-secondary"
-        >{{ article.createdAt | date: "medium" }}
+      <small class="text-secondary">{{ article.createdAt | date: "medium" }}
       </small>
     </div>
   </div>
   <div class="mr-2 ml-auto" *ngIf="showDot == true">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-three-dots"
-      (click)="showOption()"
-      viewBox="0 0 16 16"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots"
+      (click)="showOption()" viewBox="0 0 16 16">
       <path
-        d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-      />
+        d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
     </svg>
   </div>
 </div>

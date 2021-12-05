@@ -26,21 +26,26 @@ export class SettingComponent implements OnInit {
       image: [''],
       username: ['', Validators.required],
       bio: [''],
-      email: [{value: '', disabled: true}, [Validators.required, Validators.email]]
+      email: [
+        { value: '', disabled: true },
+        [Validators.required, Validators.email],
+      ],
     });
   }
 
   ngOnInit(): void {
-    this.userService.getUser().subscribe((res) => {
-      this.userProfile = res['user'];
-      this.settingForm.patchValue({
-        image: this.userProfile.image,
-        username: this.userProfile.username,
-        bio: this.userProfile.bio,
-        email: this.userProfile.email,
-        password: '',
+    this.userService
+      .getProfile(JSON.parse(localStorage.getItem('user')).username)
+      .subscribe((res) => {
+        this.userProfile = res['profile'];
+        this.settingForm.patchValue({
+          image: this.userProfile.image,
+          username: this.userProfile.username,
+          bio: this.userProfile.bio || '',
+          email: this.userProfile.email,
+          password: '',
+        });
       });
-    });
   }
 
   saveSetting() {
@@ -49,21 +54,21 @@ export class SettingComponent implements OnInit {
         this.settingForm.value.bio,
         this.settingForm.value.image,
         this.settingForm.value.username,
+        this.userProfile.username
       )
       .subscribe(
         (res: any) => {
           this.auth.currentUser.username = this.settingForm.value.username;
           let hash = {
-            username: this.settingForm.value.username, 
+            username: this.settingForm.value.username,
             email: this.auth.currentUser.email,
-            token: this.auth.currentUser.token
-          }
-          localStorage.setItem('user', JSON.stringify(hash))
-          this.router.navigate(['/profile',hash.username]);          
-          
+            token: this.auth.currentUser.token,
+          };
+          localStorage.setItem('user', JSON.stringify(hash));
+          this.router.navigate(['/profile', hash.username]);
         },
-        (err: any) => {          
-          this.usernameError = err.error.errors.username[0];          
+        (err: any) => {
+          this.usernameError = err.error.errors.username[0];
         }
       );
   }
@@ -76,7 +81,7 @@ export class SettingComponent implements OnInit {
     e.stopPropagation();
     this.router.navigate(['/']);
   }
-  
+
   onKeyUp() {
     this.usernameError = '';
   }

@@ -6,33 +6,36 @@ import { UserService } from 'src/app/services/UserService/user.service';
 @Component({
   selector: 'app-recommender',
   templateUrl: './recommender.component.html',
-  styleUrls: ['./recommender.component.scss']
+  styleUrls: ['./recommender.component.scss'],
 })
 export class RecommenderComponent implements OnInit {
   recommendedUser = [];
   feedUser = [];
-  constructor(private userService: UserService, private articleService: ArticleService, private authService: AuthService) { }
+  constructor(
+    private userService: UserService,
+    private articleService: ArticleService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated) {
-      this.articleService.getArticleLimit(10).subscribe((res:any) => { 
-        res['articles'].forEach(ele => {
-            this.recommendedUser.push(ele.author)
-        })        
-      })
+      this.userService.getUser().subscribe((res: any) => {
+        res['users'].forEach((ele) => {
+          this.recommendedUser.push(ele);
+        });
+      });
     }
   }
 
   followUser(user) {
-    this.userService.followUser(user.username).subscribe(res => {
+    this.userService.followUser(user.username).subscribe((res) => {
       user.following = true;
-    })
+    });
   }
 
   unfollowUser(user) {
-    this.userService.unFollowUser(user.username).subscribe(res => {
+    this.userService.unFollowUser(user.username).subscribe((res) => {
       user.following = false;
-    })
+    });
   }
-
 }

@@ -7,38 +7,43 @@ import { AuthService } from 'src/app/services/AuthService/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   loginForm;
   messageError: string = '';
   constructor(
-    private router:Router, 
+    private router: Router,
     private fb: FormBuilder,
-    private auth: AuthService) 
-    {
-      this.loginForm = fb.group({
-        email: ['',[Validators.required,Validators.email]],
-        password: ['',[Validators.required, Validators.minLength(8)]]
-      })
-    }
-
-  ngOnInit(): void {
+    private auth: AuthService
+  ) {
+    this.loginForm = fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
 
-  login(email,password) {
-    this.auth.login(email,password).toPromise().then(data => {
-      let currentUser = {
-        username: data['user'].username,
-        email: data['user'].email,
-        token: data['user'].token
-      }
-      localStorage.setItem('user', JSON.stringify(currentUser))
-      this.auth.isAuthenticated;
-      this.router.navigate(['']);
-    }).catch(err => { 
-      this.messageError = "Email or password " + err.error.errors["email or password"][0];
-    })
+  ngOnInit(): void {}
+
+  login(email, password) {
+    this.auth
+      .login(email, password)
+      .toPromise()
+      .then((data) => {
+        let currentUser = {
+          username: data['user'].username,
+          email: data['user'].email,
+          token: data['user'].token,
+          image: data['user'].image,
+        };
+        localStorage.setItem('user', JSON.stringify(currentUser));
+        this.auth.isAuthenticated;
+        this.router.navigate(['']);
+      })
+      .catch((err) => {
+        this.messageError =
+          'Email or password ' + err.error.errors['email or password'][0];
+      });
   }
 
   get(val) {
@@ -47,6 +52,5 @@ export class LoginComponent implements OnInit {
 
   log() {
     console.log(this.loginForm);
-    
   }
 }

@@ -1,0 +1,23 @@
+<div class="d-flex col-8">
+    <div class="col-3 p-3 m-3 " *ngFor="let topic of topicList">
+        <mat-card class="example-card d-flex flex-wrap" style="border: 1px solid rgb(139, 136, 136); height: 480px;">
+            <div class="text-center col-12 px-0 ">
+                <!-- <div mat-card-avatar class="example-header-image"></div> -->
+                <h5 class="text-center mx-auto">{{topic.name}}</h5>
+                <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+            </div>
+            <img mat-card-image src="{{topic.image }}" alt="Photo of a Shiba Inu">
+            <mat-card-content class="col-12 px-0">
+                <p>
+                    {{topic.description}}
+                </p>
+            </mat-card-content>
+            <div class="text-center align-self-end mx-auto">
+                <button class="btn btn-success" (click)="startAttempt(topic.name)">Start</button>
+                <!-- <button mat-button>SHARE</button> -->
+            </div>
+        </mat-card>
+
+    </div>
+
+</div>

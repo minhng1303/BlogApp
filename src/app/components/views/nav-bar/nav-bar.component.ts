@@ -11,22 +11,27 @@ import { UserService } from 'src/app/services/UserService/user.service';
 export class NavBarComponent implements OnInit {
   showDropdown = false;
   user = {
-    username: ' '
-  }
-  constructor(public auth: AuthService, private router: Router, private userService: UserService) {}
+    username: ' ',
+  };
+  constructor(
+    public auth: AuthService,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    this.auth.isAuthenticated;          
+    this.auth.isAuthenticated;
   }
 
   get getUserName() {
     return this.auth.currentUser.username || '';
   }
-  
+
   logOut() {
+    // this.auth.setLogout().subscribe((res) => {
     localStorage.removeItem('user');
     this.auth.setLogout();
     this.router.navigate(['login']);
+    // });
   }
 }
-

@@ -4,10 +4,9 @@ import { Article } from 'src/app/models/articles';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/AuthService/auth.service';
 import { UserService } from 'src/app/services/UserService/user.service';
-import { NgxSpinnerService } from "ngx-spinner";
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ModalService } from 'src/app/services/ModalService/modal.service';
 import { currentUser } from 'src/app/models/currentUser';
-
 
 @Component({
   selector: 'app-home',
@@ -25,7 +24,7 @@ export class HomeComponent implements OnInit {
   headingTab: string[] = ['Global Feed'];
   totalItems: number = 0;
   itemsPerPage: number = 5;
-  recommendedUser = []
+  recommendedUser = [];
   currentUser: currentUser = {
     id: 0,
     email: '',
@@ -34,73 +33,89 @@ export class HomeComponent implements OnInit {
     username: '',
     bio: '',
     image: '',
-    token: '',  
-  }
+    token: '',
+  };
   selectedPage: number = 0;
-  constructor(private articleService: ArticleService, private router: Router, 
-              public authService: AuthService, private userService: UserService,
-              private spinner: NgxSpinnerService, private dialog: ModalService) {}
+  constructor(
+    private articleService: ArticleService,
+    private router: Router,
+    public authService: AuthService,
+    private userService: UserService,
+    private spinner: NgxSpinnerService,
+    private dialog: ModalService
+  ) {}
 
   ngOnInit(): void {
     this.spinner.show();
     this.articleService.getArticle().subscribe((res: any) => {
       this.totalItems = res['articlesCount'];
-      this.slugArticle = res['articles'];            
+      this.slugArticle = res['articles'];
       this.getPageArticles(0);
       this.spinner.hide();
     });
 
     this.articleService.getTag().subscribe((res: any) => {
-          this.chipList = res.tags.filter(e => 
-          JSON.stringify(e).replace( /\W/g, '').length
-      )})
-    
+      this.chipList = res.tags.filter(
+        (e) => JSON.stringify(e).replace(/\W/g, '').length
+      );
+    });
+
     if (this.authService.isAuthenticated) {
-      this.headingTab.unshift('My Feed')
-      this.articleService.getFollowedArticle().subscribe(res => {
-        this.followArticle = res['articles']
-      })
-      this.userService.getUser().subscribe(res => {
-        this.currentUser = res['user']
-      })
+      this.headingTab.unshift('My Feed');
+      this.articleService.getFollowedArticle().subscribe((res) => {
+        this.followArticle = res['articles'];
+      });
+      this.userService
+        .getProfile(JSON.parse(localStorage.getItem('user')).username)
+        .subscribe((res) => {
+          this.currentUser = res['profile'];
+          if (this.currentUser.image == null) {
+            this.currentUser.image =
+              'https://user-images.githubusercontent.com/16608864/35882949-bbe13aa0-0bab-11e8-859c-ceda3b213818.jpeg';
+          }
+        });
     }
   }
 
   getPageTagArticles(page) {
-    this.articles = this.tagArticle.slice(page*5, page*5+5)
+    this.articles = this.tagArticle.slice(page * 5, page * 5 + 5);
   }
 
   getPageArticles(page) {
-      if (this.selectedTab == 'My Feed') {
-        this.articles = this.followArticle.slice(page*5, page*5+5)
-        return
-      }
-      this.articles = this.slugArticle.slice(page*5, page*5+5)
+    if (this.selectedTab == 'My Feed') {
+      this.articles = this.followArticle.slice(page * 5, page * 5 + 5);
+      return;
     }
-    
-  handlePageChange(page: number) {    
-    if (Math.floor(page/4) !== Math.floor(this.selectedPage/4)) {
-      this.spinner.show()
-      this.articleService.getArticleOffset(Math.floor(page/4*20)).subscribe(res => {
-        this.slugArticle = res['articles']
-        this.getPageArticles(page%4)
-        this.spinner.hide();
-        return
-      })
+    this.articles = this.slugArticle.slice(page * 5, page * 5 + 5);
+  }
+
+  handlePageChange(page: number) {
+    if (Math.floor(page / 4) !== Math.floor(this.selectedPage / 4)) {
+      this.spinner.show();
+      this.articleService
+        .getArticleOffset(Math.floor((page / 4) * 20))
+        .subscribe((res) => {
+          this.slugArticle = res['articles'];
+          this.getPageArticles(page % 4);
+          this.spinner.hide();
+          return;
+        });
     }
     this.selectedPage = page;
-    if (page%4 == 0 && Math.floor(page/4) !== Math.floor(this.selectedPage/4)) {
-      this.spinner.show()
-      this.articleService.getArticleOffset(page/4*20).subscribe(res => {
-        this.slugArticle = res['articles']
-        this.getPageArticles(page%4)
+    if (
+      page % 4 == 0 &&
+      Math.floor(page / 4) !== Math.floor(this.selectedPage / 4)
+    ) {
+      this.spinner.show();
+      this.articleService.getArticleOffset((page / 4) * 20).subscribe((res) => {
+        this.slugArticle = res['articles'];
+        this.getPageArticles(page % 4);
         this.spinner.hide();
-        return
-      })
+        return;
+      });
     }
-    this.getPageArticles(page%4); 
+    this.getPageArticles(page % 4);
   }
-  
 
   goToArticle(article) {
     let slug = article.slug;
@@ -109,9 +124,9 @@ export class HomeComponent implements OnInit {
 
   showTagArticle(e) {
     this.spinner.show();
-    this.articleService.getArticleByTag(e).subscribe(res => {
-      this.tagArticle = res['articles']
-      this.getPageTagArticles(0)
+    this.articleService.getArticleByTag(e).subscribe((res) => {
+      this.tagArticle = res['articles'];
+      this.getPageTagArticles(0);
       this.selectedChip = e;
       this.selectedTab = `#${e}`;
       if (this.headingTab.length > 2) {
@@ -122,15 +137,15 @@ export class HomeComponent implements OnInit {
     });
   }
 
-   selectTab(tab: string) {
-    if (this.selectedTab == tab) return
+  selectTab(tab: string) {
+    if (this.selectedTab == tab) return;
     this.selectedTab = tab;
     if (tab.includes('#')) {
-      this.getPageTagArticles(0)
-      return
-    } 
+      this.getPageTagArticles(0);
+      return;
+    }
     if (tab == 'My Feed') {
-      this.getPageArticles(0)
+      this.getPageArticles(0);
     }
     this.getPageArticles(0);
   }

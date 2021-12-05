@@ -1,86 +1,46 @@
 <div class="container">
   <div class="row justify-content-center p-5 mx-auto w-75">
     <div class="col-md-10">
-      <form
-        [formGroup]="signupForm"
-        (ngSubmit)="
+      <form [formGroup]="signupForm" (ngSubmit)="
           register(
             signupForm.value.username,
             signupForm.value.email,
             signupForm.value.password
           )
-        "
-      >
+        ">
         <div class="form-hearder text-center w-100 my-4">
           <h2 class="text-info font-weight-bold">Sign Up</h2>
           <span>
-            <a class="text-secondary" routerLink="../login"
-              >Already have an account?</a
-            >
+            <a class="text-secondary" routerLink="../login">Already have an account?</a>
           </span>
         </div>
 
         <div class="form-group mt-4">
-          <input
-            name="username"
-            class="form-control p-4"
-            formControlName="username"
-            placeholder="Enter username"
-            (blur)="log()"
-          />
-          <div
-            class="text-danger"
-            *ngIf="get('username').touched && get('username').invalid"
-          >
+          <input name="username" class="form-control p-4" formControlName="username" placeholder="Enter username" />
+          <div class="text-danger" *ngIf="get('username').touched && get('username').invalid">
             <small *ngIf="get('username').errors.required">
-              Username is required</small
-            >
-            <small *ngIf="get('username').errors.username"
-              >The email is badly formatted</small
-            >
+              Username is required</small>
+            <small *ngIf="get('username').errors.username">The username is at least 6 characters</small>
           </div>
         </div>
 
         <div class="form-group mt-4">
-          <input
-            name="email"
-            class="form-control p-4"
-            formControlName="email"
-            placeholder="Enter email"
-            (blur)="log()"
-          />
-          <div
-            class="text-danger"
-            *ngIf="get('email').touched && get('email').invalid"
-          >
+          <input name="email" class="form-control p-4" formControlName="email" placeholder="Enter email"
+            (blur)="log()" />
+          <div class="text-danger" *ngIf="get('email').touched && get('email').invalid">
             <small *ngIf="get('email').errors.required">
-              Username is required</small
-            >
-            <small *ngIf="get('email').errors.minlength"
-              >The username is at least 6 characters</small
-            >
+              Email is required</small>
+            <small *ngIf="get('email').errors.minlength">The email is badly formatted</small>
           </div>
         </div>
 
         <div class="form-group my-4">
-          <input
-            type="password"
-            name="password"
-            class="form-control p-4"
-            formControlName="password"
-            placeholder="Enter Password"
-            (blur)="log()"
-          />
-          <div
-            class="text-danger"
-            *ngIf="get('password').touched && get('password').invalid"
-          >
+          <input type="password" name="password" class="form-control p-4" formControlName="password"
+            placeholder="Enter Password" (blur)="log()" />
+          <div class="text-danger" *ngIf="get('password').touched && get('password').invalid">
             <small *ngIf="get('password').errors.required">
-              Password is required</small
-            >
-            <small *ngIf="get('password').errors.minlength"
-              >The minimum length for password is 6</small
-            >
+              Password is required</small>
+            <small *ngIf="get('password').errors.minlength">The minimum length for password is 6</small>
           </div>
         </div>
         <div class="row flex-wrap">
@@ -92,12 +52,8 @@
           </small>
         </div>
         <div class="form-group p-2 text-center">
-          <button
-            type="submit"
-            class="btn submitButton py-3 px-4"
-            [disabled]="!signupForm.valid"
-            [class.disabled]="!signupForm.valid"
-          >
+          <button type="submit" class="btn submitButton py-3 px-4" [disabled]="!signupForm.valid"
+            [class.disabled]="!signupForm.valid">
             Sign Up
           </button>
         </div>
